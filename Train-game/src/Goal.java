@@ -1,22 +1,29 @@
-public class Goal {
+public class Goal
+{
 	Junction StartLoc;
 	Junction DestLoc;
+	int TurnCount;
 	int TurnLimit;
 	int NoCarriages;
 	int DestCountry; //should this be a class Country?
 	
-	public Goal ()
+	public Goal (Junction StartLoc, Junction DestLoc, int TurnLimit, int NoCarriages, int DestCountry)
 	{
-		
-	}
-	public boolean CheckComplete(Player player){
-		return false; //THIS METHOD STILL NEEDS IMPLEMENTING
+		this.TurnCount = 0;
+		this.StartLoc = StartLoc;
+		this.DestLoc = DestLoc;
+		this.TurnLimit = TurnLimit;
+		this.NoCarriages = NoCarriages;
+		this.DestCountry = DestCountry;
 	}
 	
+	public void TurnIncrement()
+	{
+		this.TurnCount++;
+	}
 	
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}*/
-
+	public boolean CheckComplete(Player player)
+	{
+		return false; //TODO THIS METHOD STILL NEEDS IMPLEMENTING
+	}
 }

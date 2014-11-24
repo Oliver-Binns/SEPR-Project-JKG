@@ -1,16 +1,19 @@
 import java.util.List;
 
-public class Junction {
-	List TracksConnectedList;
+public class Junction
+{
+	List<?> ConnectedTracks;
 	boolean IsFaulty;
 	int TrainsPresent;
 	
-	public Junction(){
+	public Junction()
+	{
 		this.IsFaulty = false;
 		this.TrainsPresent = 0;
 	}
 	
-	public void RepairFault(){
+	public void RepairFault()
+	{
 		this.IsFaulty = false;
 	}
 }
