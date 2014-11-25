@@ -31,18 +31,40 @@ public class Goal
 		return this.GoalID;
 	}
 	
-	public boolean CheckComplete(int CurrentTurnCount, int Player)
+	public boolean CheckComplete(int CurrentTurnCount, int TrainID, ArrayList<?> TrainsAtDestStation)
 	{
 		boolean CompleteFlag = true; //Uses a flag to determine whether the goal is complete, assume true- determine otherwise
 		
-		for(int i = 0; i < this.GoalStarted.size(); i++)
+		//IF THERE WAS A START STATION...
+			//IF TRAIN HAS BEEN TO START STATION...
+				//IF THERE WAS A TURN LIMIT...	
+					CompleteFlag = CompleteFlag && TurnLimitExceeded(CurrentTurnCount, TrainID);
+				//ELSE TRAIN HAS BEEN TO START STATION- IF IT IS AT DEST STATION-> GOAL COMPLETE
+					//Return True?
+				//ENDIF
+			//ELSE TRAIN NOT BEEN TO START
+				//Return False?
+			//ENDIF
+		//NO START STATION
+			//
+		return CompleteFlag; //TODO THIS METHOD STILL NEEDS IMPLEMENTING
+	}
+	
+	private boolean TurnLimitExceeded(int CurrentTurnCount, int TrainID)
+	{
+		
+		/*for(int i = 0; i < this.GoalStarted.size(); i++)
 		{
-			int TurnCount = this.GoalStarted.get(i)[0];
-			if(this.TurnCount > this.TurnLimit){ //Goal has not been completed if the turn count has exceeded the limit
-				CompleteFlag = false;
+			int TurnCountWhenStarted = this.GoalStarted.get(i)[0];
+			if(this.TurnLimit <= (CurrentTurnCount - TurnCountWhenStarted)){
+				//Turn Limit has not been exceeded
+				return false;
+			}
+			else{
+				//Turn Limit has been exceeded for this train
+				this.GoalStarted.remove(i);
 			}
 		}
-		
-		return CompleteFlag; //TODO THIS METHOD STILL NEEDS IMPLEMENTING
+		return false;*/
 	}
 }
