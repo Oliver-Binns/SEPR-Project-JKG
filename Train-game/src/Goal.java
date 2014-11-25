@@ -6,6 +6,7 @@ public class Goal
 	int TurnLimit;
 	int NoCarriages;
 	int DestCountry; //should this be a class Country?
+	//int GoalID
 	
 	public Goal (Junction StartLoc, Junction DestLoc, int TurnLimit, int NoCarriages, int DestCountry)
 	{
