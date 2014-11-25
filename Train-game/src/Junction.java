@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Junction {
 
 	int JunctionID;
-	ArrayList<Integer> JunctionsConnectedList;	//Needs to be changed to int[] at a later date when map has been finalised
+	int[][] JunctionsConnectedList;	//Needs to be changed to int[] at a later date when map has been finalised
 	ArrayList<Integer> TrainsPresent;
 
 	public Junction(int ID)
@@ -12,19 +12,18 @@ public class Junction {
 		this(ID, null, null);
 	}
 
-	public Junction(int ID, int[] JunctionsConnected, int[] TrainsPresent)
+	public Junction(int ID, int[][] JunctionsConnected, int[] TrainsPresent)
 	{
-		this.JunctionsConnectedList = new ArrayList<Integer>();
-		this.TrainsPresent = new ArrayList<Integer>();
-		
 		this.JunctionID = ID;
+		this.TrainsPresent = new ArrayList<Integer>();
 		
 		if(JunctionsConnected != null)
 		{
-			for(int Connection : JunctionsConnected)
-			{
-				this.JunctionsConnectedList.add(Connection);
-			}
+			this.JunctionsConnectedList = JunctionsConnected;
+		}
+		else
+		{
+			this.JunctionsConnectedList = new int[1][1];
 		}
 		
 		if(TrainsPresent != null)
@@ -53,12 +52,12 @@ public class Junction {
 	
 	protected int[] GetConnectedJunctions()
 	{
-		int Size = this.JunctionsConnectedList.size();
+		int Size = this.JunctionsConnectedList.length;
 		int[] ReturnArray = new int[Size];
 		
 		for(int i=0; i<Size; i++)
 		{
-			ReturnArray[i] = this.JunctionsConnectedList.get(i);
+			ReturnArray[i] = this.JunctionsConnectedList[i][0];
 		}
 		
 		return ReturnArray;
@@ -76,8 +75,17 @@ public class Junction {
 		
 		return ReturnArray;
 	}
-	protected int FindNext(int Location, int Destination)
-	{ 
-		return 0;
+	protected int FindNext(int Destination)
+	{
+		int Dest;
+		
+		for(int i=0; i<this.JunctionsConnectedList.length; i++)
+		{
+			if(this.JunctionsConnectedList[i][0] == Destination)
+			{
+				return this.JunctionsConnectedList[i][1];
+			}
+		}
+		return -1;
 	}
 }
