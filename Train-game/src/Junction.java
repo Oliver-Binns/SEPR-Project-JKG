@@ -1,36 +1,50 @@
 public class Junction 
 {
 	int JunctionID;
-	int TracksConnectedList[];
-	int TrainsPresent[];
+	List<Integer> JunctionsConnectedList;
+	List<Integer> TrainsPresent;
 
-	public static void main(String[] args) 
+	private Junction(int ID, int[] JunctionsConnected, int[] TrainsPresent)
 	{
-		// This is a comment
-		// TODO Auto-generated method stub
-
+		JunctionsConnected = new ArrayList<>();
+		TrainsPresent = new ArrayList<>();
+		
+		this.JunctionID = ID;
+		
+		for(int Connection : JunctionsConnected)
+		{
+			this.JunctionsConnectedList.add(Connection);
+		}
+		
+		for(int Train : TrainsPresent)
+		{
+			this.TrainsPresent.add(Train);
+		}
 	}
 	
-	private static int AddTrain()
+	private static void AddTrain(int TrainID)
 	{
-		
-		return 0;
+		TrainsPresent.add(TrainID);
 	}
 	
-	private static int RemoveTrain()
+	private static void RemoveTrain(int TrainID)
 	{
-		
-		return 0;
+		TrainsPresent.remove(TrainID);
 	}
 
 	private static int GetJunctionID()
 	{
 		
-		return 0;
+		return this.JunctionID;
 	}
 	
-	private static void SetJunctionID()
+	private static int[] GetConnectedJunctions()
 	{
-
+		return this.JunctionsConnectedList.toArray();
+	}
+	
+	private static int[] GetTrains()
+	{
+		return this.TrainsPresent.toArray();
 	}
 }
