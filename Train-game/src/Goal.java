@@ -1,31 +1,48 @@
+import java.util.ArrayList;
+
+import com.sun.tools.javac.code.Attribute.Array;
+
 public class Goal
 {
 	Junction StartLoc;
 	Junction DestLoc;
-	int TurnCount;
+	ArrayList<int[]> GoalStarted;
 	int TurnLimit;
 	int NoCarriages;
-	int DestCountry; //should this be a class Country?
 	int GoalID;
 	
-	public Goal (int GoalID, Junction StartLoc, Junction DestLoc, int TurnLimit, int NoCarriages, int DestCountry)
+	public Goal (int GoalID, Junction StartLoc, Junction DestLoc, int TurnLimit, int NoCarriages)
 	{
 		this.GoalID = GoalID;
-		this.TurnCount = 0;
 		this.StartLoc = StartLoc;
 		this.DestLoc = DestLoc;
-		this.TurnLimit = TurnLimit;
+		this.TurnLimit = TurnLimit; //SET TO 0 IF NO LIMIT
 		this.NoCarriages = NoCarriages;
-		this.DestCountry = DestCountry;
+		this.GoalStarted = new ArrayList<int[]>();
 	}
 	
-	public void TurnIncrement()
-	{
-		this.TurnCount++;
+	public void GoalStartedForTrain(int TurnCount, int TrainID){
+		int[] pair = new int[]{TurnCount, TrainID};
+		this.GoalStarted.add(pair);
 	}
 	
-	public boolean CheckComplete(Player player)
+	public int GetID()
 	{
-		return false; //TODO THIS METHOD STILL NEEDS IMPLEMENTING
+		return this.GoalID;
+	}
+	
+	public boolean CheckComplete(int CurrentTurnCount, int Player)
+	{
+		boolean CompleteFlag = true; //Uses a flag to determine whether the goal is complete, assume true- determine otherwise
+		
+		for(int i = 0; i < this.GoalStarted.size(); i++)
+		{
+			int TurnCount = this.GoalStarted.get(i)[0];
+			if(this.TurnCount > this.TurnLimit){ //Goal has not been completed if the turn count has exceeded the limit
+				CompleteFlag = false;
+			}
+		}
+		
+		return CompleteFlag; //TODO THIS METHOD STILL NEEDS IMPLEMENTING
 	}
 }
