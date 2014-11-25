@@ -1,4 +1,3 @@
-
 public class Junction 
 {
 	int JunctionID;
@@ -32,3 +31,4 @@ public class Junction
 	
 	private static void SetJunctionID()
 	{
+

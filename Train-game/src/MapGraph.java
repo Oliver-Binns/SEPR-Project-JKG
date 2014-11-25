@@ -1,9 +1,11 @@
 
-public class Junction 
+public class MapGraph
 {
-	int JunctionID;
-	int TracksConnectedList[];
-	int TrainsPresent[];
+	int CurrentPlayer;
+	int PlayerList[];
+	int TurnCunter;
+	Goal ActiveGoalList[];
+	int TrainList[];
 
 	public static void main(String[] args) 
 	{
@@ -11,24 +13,4 @@ public class Junction
 		// TODO Auto-generated method stub
 
 	}
-	
-	private static int AddTrain()
-	{
-		
-		return 0;
-	}
-	
-	private static int RemoveTrain()
-	{
-		
-		return 0;
-	}
 
-	private static int GetJunctionID()
-	{
-		
-		return 0;
-	}
-	
-	private static void SetJunctionID()
-	{
