@@ -6,10 +6,11 @@ public class Goal
 	int TurnLimit;
 	int NoCarriages;
 	int DestCountry; //should this be a class Country?
-	//int GoalID
+	int GoalID;
 	
-	public Goal (Junction StartLoc, Junction DestLoc, int TurnLimit, int NoCarriages, int DestCountry)
+	public Goal (int GoalID, Junction StartLoc, Junction DestLoc, int TurnLimit, int NoCarriages, int DestCountry)
 	{
+		this.GoalID = GoalID;
 		this.TurnCount = 0;
 		this.StartLoc = StartLoc;
 		this.DestLoc = DestLoc;
