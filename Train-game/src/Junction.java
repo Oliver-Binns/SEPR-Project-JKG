@@ -1,7 +1,7 @@
 public class Junction 
 {
 	int JunctionID;
-	List<Integer> JunctionsConnectedList;
+	List<Integer> JunctionsConnectedList;	//Needs to be changed to int[] at a later date when map has been finalised
 	List<Integer> TrainsPresent;
 
 	private Junction(int ID, int[] JunctionsConnected, int[] TrainsPresent)
@@ -46,5 +46,9 @@ public class Junction
 	private static int[] GetTrains()
 	{
 		return this.TrainsPresent.toArray();
+	}
+	private static int FindNext(int Location, int Destination)
+	{
+		return 0;
 	}
 }
