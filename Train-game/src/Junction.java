@@ -1,54 +1,106 @@
-public class Junction 
-{
-	int JunctionID;
-	List<Integer> JunctionsConnectedList;	//Needs to be changed to int[] at a later date when map has been finalised
-	List<Integer> TrainsPresent;
+import java.util.ArrayList;
 
-	private Junction(int ID, int[] JunctionsConnected, int[] TrainsPresent)
+
+public class Junction {
+
+	int JunctionID;
+	ArrayList<Integer> JunctionsConnectedList;	//Needs to be changed to int[] at a later date when map has been finalised
+	ArrayList<Integer> TrainsPresent;
+
+	public Junction(int ID)
+	{	
+		this(ID, null, null);
+	}
+
+	public Junction(int ID, int[] JunctionsConnected, int[] TrainsPresent)
 	{
-		JunctionsConnected = new ArrayList<>();
-		TrainsPresent = new ArrayList<>();
+		this.JunctionsConnectedList = new ArrayList<Integer>();
+		this.TrainsPresent = new ArrayList<Integer>();
 		
 		this.JunctionID = ID;
 		
-		for(int Connection : JunctionsConnected)
+		if(JunctionsConnected != null)
 		{
-			this.JunctionsConnectedList.add(Connection);
+			for(int Connection : JunctionsConnected)
+			{
+				this.JunctionsConnectedList.add(Connection);
+			}
 		}
 		
-		for(int Train : TrainsPresent)
+		if(TrainsPresent != null)
 		{
-			this.TrainsPresent.add(Train);
+			for(int Train : TrainsPresent)
+			{
+				this.TrainsPresent.add(Train);
+			}
 		}
 	}
 	
-	private static void AddTrain(int TrainID)
+	protected void AddTrain(int TrainID)
 	{
-		TrainsPresent.add(TrainID);
+		this.TrainsPresent.add(TrainID);
 	}
 	
-	private static void RemoveTrain(int TrainID)
+	protected void RemoveTrain(int TrainID)
 	{
-		TrainsPresent.remove(TrainID);
+		this.TrainsPresent.remove(Integer.valueOf(TrainID));
 	}
 
-	private static int GetJunctionID()
+	protected int GetJunctionID()
 	{
-		
 		return this.JunctionID;
 	}
 	
-	private static int[] GetConnectedJunctions()
+	protected int[] GetConnectedJunctions()
 	{
-		return this.JunctionsConnectedList.toArray();
+		int Size = this.JunctionsConnectedList.size();
+		int[] ReturnArray = new int[Size];
+		
+		for(int i=0; i<Size; i++)
+		{
+			ReturnArray[i] = this.JunctionsConnectedList.get(i);
+		}
+		
+		return ReturnArray;
 	}
 	
-	private static int[] GetTrains()
+	protected int[] GetTrains()
 	{
-		return this.TrainsPresent.toArray();
+		int Size = this.TrainsPresent.size();
+		int[] ReturnArray = new int[Size];
+		
+		for(int i=0; i<Size; i++)
+		{
+			ReturnArray[i] = this.TrainsPresent.get(i);
+		}
+		
+		return ReturnArray;
 	}
-	private static int FindNext(int Location, int Destination)
-	{
+	protected int FindNext(int Location, int Destination)
+	{ 
 		return 0;
 	}
+	public static void main(String[] args)
+	{
+		try
+		{
+		Junction test = new Junction(1);
+		
+		System.out.println("Instantiation successful! Printing the output of all methods:");
+		test.AddTrain(2);
+		System.out.println("AddTrain successful! New train list is: " + test.GetTrains().toString());
+		test.RemoveTrain(2);
+		System.out.println("RemoveTrain successful! New train list is: " + test.GetTrains().toString());
+		System.out.println("GetJunctionID: " + test.GetJunctionID());
+		System.out.println("GetConnectedJunctions: " + test.GetConnectedJunctions().toString());
+		System.out.println("FindNext: " + test.FindNext(0,0));
+		
+		System.out.println("Methods throw no exceptions under standard use!");
+		}
+		catch(Exception e)
+		{
+			System.out.println("System broke! Printing error message:\n" + e.toString());
+		}
+	}
 }
+
