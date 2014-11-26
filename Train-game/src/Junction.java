@@ -42,7 +42,7 @@ public class Junction {
 	
 	protected void RemoveTrain(int TrainID)
 	{
-		this.TrainsPresent.remove(Integer.valueOf(TrainID));
+		this.TrainsPresent.remove(Integer.valueOf(TrainID)); // why not just "TrainID"? 
 	}
 
 	protected int GetJunctionID()
