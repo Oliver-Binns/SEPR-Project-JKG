@@ -1,3 +1,5 @@
+package MapGraph;
+
 
 public class MapGraph
 {
