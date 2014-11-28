@@ -7,6 +7,7 @@ public class MapGraph
 	int PlayerList[];
 	int TurnCounter;
 	Goal ActiveGoalList[];
+	Junction[][] MapArray;
 	int TrainList[];
 	
 	public MapGraph(Junction[][] MapArray)
