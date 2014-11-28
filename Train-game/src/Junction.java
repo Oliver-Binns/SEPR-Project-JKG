@@ -77,6 +77,12 @@ public class Junction {
 		
 		return ReturnArray;
 	}
+	
+	protected boolean IsPresent(Integer TrainID)
+	{
+		return TrainsPresent.contains(Integer TrainID);
+	}
+	
 	protected int FindNext(int Destination)
 	{
 		int Dest;
