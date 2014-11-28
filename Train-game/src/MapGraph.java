@@ -5,7 +5,7 @@ public class MapGraph
 {
 	int CurrentPlayer;
 	int PlayerList[];
-	int TurnCunter;
+	int TurnCounter;
 	Goal ActiveGoalList[];
 	int TrainList[];
 
