@@ -8,6 +8,11 @@ public class MapGraph
 	int TurnCounter;
 	Goal ActiveGoalList[];
 	int TrainList[];
+	
+	public MapGraph(Junction[][] MapArray)
+	{
+		
+	}
 
 	public static void main(String[] args) 
 	{
@@ -16,3 +21,19 @@ public class MapGraph
 
 	}
 
+	protected void CreateJunction()
+	{
+		
+	}
+	
+	protected void CreateCheckPoint()
+	{
+		
+	}
+	
+	protected void CreateStation()
+	{
+		
+	}
+	
+	
