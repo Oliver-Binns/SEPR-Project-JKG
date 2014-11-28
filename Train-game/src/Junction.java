@@ -37,14 +37,14 @@ public class Junction {
 		}
 	}
 	
-	protected void AddTrain(int TrainID)
+	protected void AddTrain(Integer TrainID)
 	{
 		this.TrainsPresent.add(TrainID);
 	}
 	
-	protected void RemoveTrain(int TrainID)
+	protected void RemoveTrain(Integer TrainID)
 	{
-		this.TrainsPresent.remove(Integer.valueOf(TrainID)); // why not just "TrainID"? 
+		this.TrainsPresent.remove(TrainID);
 	}
 
 	protected int GetJunctionID()
@@ -65,24 +65,19 @@ public class Junction {
 		return ReturnArray;
 	}
 	
-	protected int[] GetTrains()
+	protected ArrayList<Integer> GetTrains()
 	{
-		int Size = this.TrainsPresent.size();
-		int[] ReturnArray = new int[Size];
-		
-		for(int i=0; i<Size; i++)
-		{
-			ReturnArray[i] = this.TrainsPresent.get(i);
-		}
-		
-		return ReturnArray;
+		return this.TrainsPresent;
 	}
 	
+<<<<<<< HEAD
 	protected boolean IsPresent(Integer TrainID)
 	{
 		return TrainsPresent.contains(Integer TrainID);
 	}
 	
+=======
+>>>>>>> cda2e81d373d0c5d6aedd3d72126c1208cac3003
 	protected int FindNext(int Destination)
 	{
 		int Dest;

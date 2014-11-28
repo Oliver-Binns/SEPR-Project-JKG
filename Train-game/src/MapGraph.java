@@ -4,15 +4,21 @@ package MapGraph;
 public class MapGraph
 {
 	int CurrentPlayer;
-	int PlayerList[];
+	int[] PlayerList;
 	int TurnCounter;
-	Goal ActiveGoalList[];
-	Junction[][] MapArray;
-	int TrainList[];
+	Goal[] ActiveGoalList;
+	int[][] MapArray;
+	ArrayList<Integer> TrainList;
+	Junction[] JunctionList;
 	
-	public MapGraph(Junction[][] MapArray)
+	public MapGraph(int size)
 	{
-		
+		this.CurrentPlayer = 1;
+		this.PlayerList = [1,2];
+		this.TurnCounter = 0;
+		this.ActiveGoalList = new Goal[3];
+		this.MapArray = new int[size][size];
+		this.TrainList = new ArrayList<Integer>();
 	}
 
 	public static void main(String[] args) 
@@ -37,4 +43,19 @@ public class MapGraph
 		
 	}
 	
+	protected void MoveTrain(int TrainID, int Location, int Destination)
+	{
+		Junction Location = JunctionList[Location];
+		
+		if(Location.IsPresent(TrainID))
+		{
+			int NewLoc = Location.FindNext(Destination);
+			Location.RemoveTrain(TrainID);
+			JunctionList[NewLoc].AddTrain(TrainID);
+		}
+	}
 	
+	protected void IncrementTurn()
+	{
+		this.TurnCounter++;
+	}
