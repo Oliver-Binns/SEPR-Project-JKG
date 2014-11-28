@@ -32,7 +32,7 @@ public class Junction {
 		{
 			for(int Train : TrainsPresent)
 			{
-				this.TrainsPresent.add(Train);
+				this.TrainsPresent.add(Integer.valueOf(Train));
 			}
 		}
 	}
