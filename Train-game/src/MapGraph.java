@@ -19,16 +19,10 @@ public class MapGraph
 		this.ActiveGoalList = new Goal[3];
 		this.MapArray = new int[size][size];
 		this.TrainList = new ArrayList<Integer>();
+		this.JunctionList = new Junction[size];
 	}
 
-	public static void main(String[] args) 
-	{
-		// This is a comment
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void CreateJunction()
+	protected void CreateJunction(int[][] JunctionsConnected, int[] TrainsPresent)
 	{
 		
 	}
@@ -47,11 +41,11 @@ public class MapGraph
 	{
 		Junction Location = JunctionList[Location];
 		
-		if(Location.IsPresent(TrainID))
+		if(Location.IsPresent(Integer.valueOf(TrainID)))
 		{
 			int NewLoc = Location.FindNext(Destination);
-			Location.RemoveTrain(TrainID);
-			JunctionList[NewLoc].AddTrain(TrainID);
+			Location.RemoveTrain(Integer.valueOf(TrainID));
+			JunctionList[NewLoc].AddTrain(Integer.valueOf(TrainID));
 		}
 	}
 	

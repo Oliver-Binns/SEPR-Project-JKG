@@ -70,14 +70,12 @@ public class Junction {
 		return this.TrainsPresent;
 	}
 	
-<<<<<<< HEAD
+
 	protected boolean IsPresent(Integer TrainID)
 	{
 		return TrainsPresent.contains(Integer TrainID);
 	}
-	
-=======
->>>>>>> cda2e81d373d0c5d6aedd3d72126c1208cac3003
+
 	protected int FindNext(int Destination)
 	{
 		int Dest;
