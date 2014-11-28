@@ -1,29 +1,40 @@
 import java.util.ArrayList;
 
-import com.sun.tools.javac.code.Attribute.Array;
-
-public class Goal
+public abstract class Goal
 {
-	Junction StartLoc;
-	Junction DestLoc;
-	ArrayList<int[]> GoalStarted;
-	ArrayList<Train> TrainList;
+	int GoalID;
+	int DestLocID;
+	int StartLocID;
 	int TurnLimit;
 	int NoCarriages;
-	int GoalID;
+	ArrayList<int[]> GoalStarted;
+	//ArrayList<Train> TrainList;
 	
-	public Goal (int GoalID, Junction StartLoc, Junction DestLoc, int TurnLimit, int NoCarriages)
+	public Goal (int GoalID, int StartLocID, int DestLocID, int TurnLimit, int NoCarriages)
 	{
 		this.GoalID = GoalID;
-		this.StartLoc = StartLoc; //SET TO -1 IF NO STARTLOC
-		this.DestLoc = DestLoc;
-		this.TurnLimit = TurnLimit; //SET TO -1 IF NO LIMIT
-		this.NoCarriages = NoCarriages;
+		this.StartLocID = StartLocID; //SET TO -1 IF NO STARTLOC
+		this.DestLocID = DestLocID;
+		this.TurnLimit = TurnLimit; //SET TO 0 IF NO LIMIT
+		this.NoCarriages = NoCarriages; //SET TO 0 IF NO CONSTRAINT
 		this.GoalStarted = new ArrayList<int[]>();
-		this.TrainList = new ArrayList<Train>();
+		//this.TrainList = new ArrayList<Train>();
 	}
 	
-	public void GoalStartedForTrainX(int TurnCount, Train TrainX)
+	public int GetID()
+	{
+		return this.GoalID;
+	}
+	
+	public void GoalStartedForTrainX(int TurnCount, int TrainID)
+	{
+		int [] pair = new int[]{TurnCount, TrainID};
+		this.GoalStarted.add(pair);
+	}
+	public abstract void CheckComplete();
+}
+	
+	/*public void GoalStartedForTrainX(int TurnCount, Train TrainX)
 	{
 		this.TrainList.add(TrainX);
 		int flag1 = 0;
@@ -38,11 +49,11 @@ public class Goal
 	
 	public int TrainBeenToStart(Train TrainX) 
 	{
-		for (int i, i < this.GoalStarted.size(), i++ )
+		for (int i; i < this.GoalStarted.size(); i++ )
 		{
 			if (this.GoalStarted.get(i)[0] == TrainX.TrainID)
 			{
-				if (TrainX.CurrentJunction == this.Startloc)
+				if (TrainX.CurrentJunction == this.StartLoc)
 				{
 					this.GoalStarted.get(i)[2] = 1				
 				}					
@@ -105,7 +116,7 @@ public class Goal
 			return True;
 			}
 		}
-}
+}*/
 
 //	boolean CompleteFlag = true ; //Uses a flag to determine whether the goal is complete, assume true- determine otherwise
 
