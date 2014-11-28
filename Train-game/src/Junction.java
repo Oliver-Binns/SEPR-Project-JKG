@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Junction {
 
 	int JunctionID;
-	int[][] JunctionsConnectedList;	//Needs to be changed to int[] at a later date when map has been finalised
+	int[][] JunctionsConnectedList;
 	ArrayList<Integer> TrainsPresent;
 
 	public Junction(int ID)
