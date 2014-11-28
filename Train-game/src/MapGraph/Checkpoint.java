@@ -2,7 +2,7 @@ package MapGraph;
 
 public class Checkpoint extends Junction
 {
-	bool IsFaulty;
+	boolean IsFaulty;
 	String FaultMessage;
 	
 	public Checkpoint(int ID)
@@ -12,9 +12,9 @@ public class Checkpoint extends Junction
 	
 	public Checkpoint(int ID, int[][] JunctionsConnected, int[] TrainsPresent)
 	{
+		super(ID, JunctionsConnected, TrainsPresent);
 		this.IsFaulty = false;
 		this.FaultMessage = "";
-		super(ID, JunctionsConnected, TrainsPresent);
 	}
 	
 	protected void RepairFault()

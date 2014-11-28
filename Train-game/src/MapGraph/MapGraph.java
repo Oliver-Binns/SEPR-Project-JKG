@@ -1,4 +1,5 @@
 package MapGraph;
+import java.util.ArrayList;;
 
 
 public class MapGraph
@@ -39,12 +40,12 @@ public class MapGraph
 	
 	protected void MoveTrain(int TrainID, int Location, int Destination)
 	{
-		Junction Location = JunctionList[Location];
+		Junction JunctLocation = JunctionList[Location];
 		
-		if(Location.IsPresent(Integer.valueOf(TrainID)))
+		if(JunctLocation.IsPresent(Integer.valueOf(TrainID)))
 		{
-			int NewLoc = Location.FindNext(Destination);
-			Location.RemoveTrain(Integer.valueOf(TrainID));
+			int NewLoc = JunctLocation.FindNext(Destination);
+			JunctLocation.RemoveTrain(Integer.valueOf(TrainID));
 			JunctionList[NewLoc].AddTrain(Integer.valueOf(TrainID));
 		}
 	}
@@ -53,3 +54,5 @@ public class MapGraph
 	{
 		this.TurnCounter++;
 	}
+	
+}

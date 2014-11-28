@@ -16,7 +16,7 @@ public class Station extends Junction
 	
 	public Station(int ID, int[][] JunctionsConnected, int[] TrainsPresent, String Name)
 	{
-		this.Name = Name;
 		super(ID, JunctionsConnected, TrainsPresent);
+		this.Name = Name;
 	}
 }
