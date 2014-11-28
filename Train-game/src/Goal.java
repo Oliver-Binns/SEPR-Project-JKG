@@ -4,18 +4,14 @@ public abstract class Goal
 {
 	int GoalID;
 	int DestLocID;
-	int StartLocID;
-	int TurnLimit;
 	int NoCarriages;
 	ArrayList<int[]> GoalStarted;
 	//ArrayList<Train> TrainList;
 	
-	public Goal (int GoalID, int StartLocID, int DestLocID, int TurnLimit, int NoCarriages)
+	public Goal (int GoalID, int DestLocID, int NoCarriages)
 	{
 		this.GoalID = GoalID;
-		this.StartLocID = StartLocID; //SET TO -1 IF NO STARTLOC
 		this.DestLocID = DestLocID;
-		this.TurnLimit = TurnLimit; //SET TO 0 IF NO LIMIT
 		this.NoCarriages = NoCarriages; //SET TO 0 IF NO CONSTRAINT
 		this.GoalStarted = new ArrayList<int[]>();
 		//this.TrainList = new ArrayList<Train>();
@@ -31,7 +27,7 @@ public abstract class Goal
 		int [] pair = new int[]{TurnCount, TrainID};
 		this.GoalStarted.add(pair);
 	}
-	public abstract void CheckComplete();
+	public abstract boolean CheckComplete();
 }
 	
 	/*public void GoalStartedForTrainX(int TurnCount, Train TrainX)
