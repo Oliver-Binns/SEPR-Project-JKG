@@ -37,6 +37,11 @@ public class Junction {
 		}
 	}
 	
+	protected int GetID()
+	{
+		return this.JunctionID;
+	}
+	
 	protected void AddTrain(Integer TrainID)
 	{
 		this.TrainsPresent.add(TrainID);

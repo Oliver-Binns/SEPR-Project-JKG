@@ -21,22 +21,24 @@ public class MapGraph
 		this.ActiveGoalList = new Goal[3];
 		this.MapArray = new int[size][size];
 		this.TrainList = new ArrayList<Integer>();
-		this.JunctionList = J.GetJunctionList;
+		this.JunctionList = J.GetJunctionList();
+		this.CreateMapArray();
 	}
 
-	protected void CreateJunction(int[][] JunctionsConnected, int[] TrainsPresent)
+	protected void CreateMapArray()
 	{
-		
-	}
-	
-	protected void CreateCheckPoint()
-	{
-		
-	}
-	
-	protected void CreateStation()
-	{
-		
+		for(Junction j : this.JunctionList)
+		{
+			int index = j.GetID();
+			this.MapArray[index][index] = 1;
+			for(int connection : j.GetConnectedJunctions())
+			{
+				int Next = j.FindNext(connection);
+				
+				this.MapArray[index][next] = 1;
+				this.MapArray[next][index] = 1;
+			}
+		}
 	}
 	
 	protected void MoveTrain(int TrainID, int Location, int Destination)
