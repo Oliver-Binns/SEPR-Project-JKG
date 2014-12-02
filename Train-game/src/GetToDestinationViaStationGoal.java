@@ -1,43 +1,39 @@
 import java.util.ArrayList;
 
 public class GetToDestinationViaStationGoal extends Goal {
-	private final int StartLocID;	//read only - once a goal has been instantiated, it can not be changed!
-	private final int TurnLimit;	//read only - once a goal has been instantiated, it can not be changed!
-	private ArrayList<int[]> GoalStarted;	//stores pairs of turn count and train id when trains arrive at the start location!
+	private final int START_LOC_ID;	//read only - once a goal has been instantiated, it can not be changed!
+	private final int TURN_LIMIT;	//read only - once a goal has been instantiated, it can not be changed!
+	private ArrayList<int[]> goalStarted;	//stores pairs of turn count and train id when trains arrive at the start location!
 	
 	//OBJECT CONSTRUCTOR
-	public GetToDestinationViaStationGoal(int GoalID, int StartLocID,
-			int DestLocID, int TurnLimit, int NoCarriages) {
-		super(GoalID, DestLocID, NoCarriages);
+	public GetToDestinationViaStationGoal(int goalID, int startLocID, int destLocID, int turnLimit, int noCarriages) {
+		super(goalID, destLocID, noCarriages);
 		
-		this.StartLocID = StartLocID;
-		this.TurnLimit = TurnLimit; //SET TO 0 IF NO LIMIT
-		this.GoalStarted = new ArrayList<int[]>();
+		this.START_LOC_ID = startLocID;
+		this.TURN_LIMIT = turnLimit; //SET TO 0 IF NO LIMIT
+		this.goalStarted = new ArrayList<int[]>();
 	}
 
 	//ACCESSORS & MUTATORS
 	public int getStartLocID() {	//This needs to be public as we need to be able to set a listener for trains arriving at the start loc id
-		return StartLocID;
+		return START_LOC_ID;
 	}
 	public int getTurnLimit() {	//subclass needs to access the noCarriages
-		return TurnLimit;
-	}
-	protected int getDestLocID() {	//subclass needs to know our destination id
-		return DestLocID;
+		return TURN_LIMIT;
 	}
 	
 	//OTHER METHODS
 	@Override
-	public boolean CheckComplete(int TurnCount) {
+	public boolean checkComplete(int turnCount) {
 		// TODO Auto-generated method stub
-		boolean Complete = true;
+		boolean complete = false;
 		//if(TurnLimit < )
-		return Complete;
+		return complete;
 	}
 	
-	public void GoalStartedForTrainX(int TurnCount, int TrainID) {	//NEED TO SET AN EVENT LISTENER FOR WHEN A TRAIN ARRIVES AT THE START LOCATION!
-		int [] pair = new int[]{TurnCount, TrainID};
-		this.GoalStarted.add(pair);
+	public void goalStartedForTrainX(int turnCount, int trainID) {	//NEED TO SET AN EVENT LISTENER FOR WHEN A TRAIN ARRIVES AT THE START LOCATION!
+		int [] pair = new int[]{turnCount, trainID};
+		this.goalStarted.add(pair);
 	}
 
 }
