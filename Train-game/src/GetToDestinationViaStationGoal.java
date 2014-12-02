@@ -24,13 +24,20 @@ public class GetToDestinationViaStationGoal extends Goal {
 	
 	//OTHER METHODS
 	@Override
-	public boolean checkComplete(int turnCount) {
+	public boolean checkComplete(int turnCount) {	//CHECKS COMPLETE FOR A PARTICULAR PLAYER BY ITERATING
 		// TODO Auto-generated method stub
 		boolean complete = false;
-		//if(TurnLimit < )
+		//RUN THROUGH LIST OF TRAINS AND CHECK IF NO CARRIAGES IS SUFFICIENT...
 		return complete;
 	}
 	
+	public boolean reachedDestinationStation(int turnCount, int trainID) {
+		//TODO implement this method!
+		
+		//CHECK IF TRAIN HAS BEEN TO START LOCATION...
+			//CHECK IF TIME IS UNDER LIMIT
+				//ADD TRAIN ID & CARRIAGES TO LIST OF COMPLETED TRAINS
+	}
 	public void goalStartedForTrainX(int turnCount, int trainID) {	//NEED TO SET AN EVENT LISTENER FOR WHEN A TRAIN ARRIVES AT THE START LOCATION!
 		int [] pair = new int[]{turnCount, trainID};
 		this.goalStarted.add(pair);
