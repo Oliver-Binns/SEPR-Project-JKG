@@ -4,6 +4,7 @@ public class GetToDestinationViaStationGoal extends Goal {
 	private final int START_LOC_ID;	//read only - once a goal has been instantiated, it can not be changed!
 	private final int TURN_LIMIT;	//read only - once a goal has been instantiated, it can not be changed!
 	private ArrayList<int[]> goalStarted;	//stores pairs of turn count and train id when trains arrive at the start location!
+	private ArrayList<int[]> reachedStation;
 	
 	//OBJECT CONSTRUCTOR
 	public GetToDestinationViaStationGoal(int goalID, int startLocID, int destLocID, int turnLimit, int noCarriages) {
@@ -24,19 +25,37 @@ public class GetToDestinationViaStationGoal extends Goal {
 	
 	//OTHER METHODS
 	@Override
-	public boolean checkComplete(int turnCount) {	//CHECKS COMPLETE FOR A PARTICULAR PLAYER BY ITERATING
+	public boolean checkComplete(ArrayList<int>trainsList) {	//CHECKS COMPLETE FOR A PARTICULAR PLAYER BY ITERATING
 		// TODO Auto-generated method stub
-		boolean complete = false;
-		//RUN THROUGH LIST OF TRAINS AND CHECK IF NO CARRIAGES IS SUFFICIENT...
-		return complete;
+		int carriages = 0;
+		for(int i = 0; i < trainsList.size(); i++){	//RUN THROUGH LIST OF TRAINS AND CHECK IF NO CARRIAGES IS SUFFICIENT...
+			for(int j = 0; j < reachedStation.size(); j++){
+				//nested 'for' is inefficient :(
+				int [] pair = reachedStation.get(j);
+				if(trainsList.get(i) == pair[0]){
+					carriages += pair[1];
+				}
+			}
+		}
+		return carriages >= this.getNoCarriages();
 	}
 	
-	public boolean reachedDestinationStation(int turnCount, int trainID) {
+	public void reachedDestinationStation(int turnCount, int trainID, int noCarriages) {	//NEED TO SET A LISTENER FOR WHEN A TRAIN ARRIVES AT THE DESTINATION LOCATION!
 		//TODO implement this method!
-		
 		//CHECK IF TRAIN HAS BEEN TO START LOCATION...
+		for(int i = 0; i < this.goalStarted.size(); i++){
+			int [] pair = this.goalStarted.get(i);
+			if(trainID == pair[1]){
+				this.goalStarted.remove(i); //remove item so this train can't leave and come back again without returning to the start location!
+				if(this.getTurnLimit() >= (turnCount - pair[0])){
+					int [] newPair = new int[]{trainID, noCarriages};
+					this.reachedStation.add(newPair);
+				}
+			}
+		}
 			//CHECK IF TIME IS UNDER LIMIT
 				//ADD TRAIN ID & CARRIAGES TO LIST OF COMPLETED TRAINS
+				
 	}
 	public void goalStartedForTrainX(int turnCount, int trainID) {	//NEED TO SET AN EVENT LISTENER FOR WHEN A TRAIN ARRIVES AT THE START LOCATION!
 		int [] pair = new int[]{turnCount, trainID};
