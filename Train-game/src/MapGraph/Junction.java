@@ -8,7 +8,8 @@ public class Junction {
 	int JunctionID;
 	int[][] JunctionsConnectedList;
 	ArrayList<Integer> TrainsPresent;
-
+	
+	//Overloaded constructors for instantiating Junction with fewer arguments
 	public Junction(int ID)
 	{	
 		this(ID, null, null);
@@ -42,19 +43,16 @@ public class Junction {
 		return this.JunctionID;
 	}
 	
+	//Adds Train to the TrainsPresent list
 	protected void AddTrain(Integer TrainID)
 	{
 		this.TrainsPresent.add(TrainID);
 	}
 	
+	//Removes Train from the TrainsPresent list
 	protected void RemoveTrain(Integer TrainID)
 	{
 		this.TrainsPresent.remove(TrainID);
-	}
-
-	protected int GetJunctionID()
-	{
-		return this.JunctionID;
 	}
 	
 	protected int[] GetConnectedJunctions()

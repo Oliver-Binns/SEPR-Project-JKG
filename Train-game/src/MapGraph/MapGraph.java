@@ -12,6 +12,7 @@ public class MapGraph
 	ArrayList<Integer> TrainList;
 	Junction[] JunctionList;
 	
+	//Constructor generates 2D MapArray based on given size
 	public MapGraph(int size)
 	{
 		JunctionConstructor J = new JunctionConstructor();
@@ -19,28 +20,30 @@ public class MapGraph
 		this.PlayerList = [1,2];
 		this.TurnCounter = 0;
 		this.ActiveGoalList = new Goal[3];
-		this.MapArray = new int[size][size];
+		this.MapArray = new boolean[size][size];
 		this.TrainList = new ArrayList<Integer>();
 		this.JunctionList = J.GetJunctionList();
 		this.CreateMapArray();
 	}
-
+	
+	//Takes the JunctionList and generates a 2D MapArray from their respective JunctionConnectedList
 	protected void CreateMapArray()
 	{
 		for(Junction j : this.JunctionList)
 		{
 			int index = j.GetID();
-			this.MapArray[index][index] = 1;
+			this.MapArray[index][index] = true;
 			for(int connection : j.GetConnectedJunctions())
 			{
 				int Next = j.FindNext(connection);
 				
-				this.MapArray[index][next] = 1;
-				this.MapArray[next][index] = 1;
+				this.MapArray[index][next] = true;
+				this.MapArray[next][index] = true;
 			}
 		}
 	}
 	
+	//Moves the Train from a specified location to a specified destination
 	protected void MoveTrain(int TrainID, int Location, int Destination)
 	{
 		Junction JunctLocation = JunctionList[Location];
@@ -53,33 +56,39 @@ public class MapGraph
 		}
 	}
 	
+	//Increments the turn counter
 	protected void IncrementTurn()
 	{
 		this.TurnCounter++;
 	}
-
+	
+	//Adds the Goal to the GoalList
 	protected void AddGoal(Goal goal)
 	{
 		this.ActiveGoalList.add(goal);
 	}
 	
+	//Removes the Goal from the GoalList
 	protected void RemoveGoal(Goal goal)
 	{
 		this.ActiveGoalList.remove(goal);
 	}
 	
+	//Adds the Train to the specified Junction
 	protected void AddTrain(int TrainID, int Location)
 	{
 		this.TrainList.add(Integer.valueOf(TrainID));
 		this.JunctionList[Location].AddTrain(TrainID);
 	}
 	
+	//Removes the Train from the specified Junction
 	protected void RemoveTrain(int TrainID, int Location)
 	{
 		this.TrainList.remove(Integer.valueOf(TrainID));
 		this.JunctionList[Location].RemoveTrain(TrainID);
 	}
 	
+	//Changes CurrentPlayer to indicate a new turn.
 	protected void ChangePlayer()
 	{
 		switch(this.CurrentPlayer)

@@ -4,6 +4,7 @@ public class Station extends Junction
 {
 	String Name;
 	
+	//Overloaded constructors for instantiating Station with fewer arguments
 	public Station(int ID)
 	{
 		this(ID, null, null, "None");
