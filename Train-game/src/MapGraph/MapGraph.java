@@ -1,4 +1,5 @@
 package MapGraph;
+
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,15 +47,29 @@ public class MapGraph
 		}
 	}
 
+	//Initializes all of the junction objects and links them together for the map.
 	private ArrayList<Junction> GetJunctionList(String File) {
+		int ID;					//Identification Number
+		int[][] JCL;			//Junction Connected List
+		ArrayList<Integer> TL;	//Train List
 		File map = new File(File);
+		ArrayList<Junction> jList = new ArrayList<Junction>();
 		
 		try {
+			String delims = ",";
 			Scanner sc = new Scanner(map);
 			
 			while(sc.hasNextLine()) {
-				String i = sc.nextLine();
+				String s;
+				String[] junctionLine;
 				
+				ID = sc.nextInt();
+				
+				while(s != "|") {
+					
+				}
+				
+				jList.append(new Junction(ID, JCL, TL));
 			}
 		}
 	}
