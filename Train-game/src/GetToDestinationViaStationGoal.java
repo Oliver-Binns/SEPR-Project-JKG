@@ -25,8 +25,7 @@ public class GetToDestinationViaStationGoal extends Goal {
 	
 	//OTHER METHODS
 	@Override
-	public boolean checkComplete(ArrayList<int>trainsList) {	//CHECKS COMPLETE FOR A PARTICULAR PLAYER BY ITERATING
-		// TODO Auto-generated method stub
+	public boolean checkComplete(ArrayList trainsList) {	//CHECKS COMPLETE FOR A PARTICULAR PLAYER BY ITERATING
 		int carriages = 0;
 		for(int i = 0; i < trainsList.size(); i++){	//RUN THROUGH LIST OF TRAINS AND CHECK IF NO CARRIAGES IS SUFFICIENT...
 			for(int j = 0; j < reachedStation.size(); j++){
@@ -41,7 +40,6 @@ public class GetToDestinationViaStationGoal extends Goal {
 	}
 	
 	public void reachedDestinationStation(int turnCount, int trainID, int noCarriages) {	//NEED TO SET A LISTENER FOR WHEN A TRAIN ARRIVES AT THE DESTINATION LOCATION!
-		//TODO implement this method!
 		//CHECK IF TRAIN HAS BEEN TO START LOCATION...
 		for(int i = 0; i < this.goalStarted.size(); i++){
 			int [] pair = this.goalStarted.get(i);
@@ -61,5 +59,6 @@ public class GetToDestinationViaStationGoal extends Goal {
 		int [] pair = new int[]{turnCount, trainID};
 		this.goalStarted.add(pair);
 	}
-
+	
+	//maybe make a clean-up function that removes any trains from the goalStarted list that have run out of time to complete?
 }

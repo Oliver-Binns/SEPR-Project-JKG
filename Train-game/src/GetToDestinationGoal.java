@@ -1,4 +1,3 @@
-
 public class GetToDestinationGoal extends Goal {
 
 	//OBJECT CONSTRUCTOR
