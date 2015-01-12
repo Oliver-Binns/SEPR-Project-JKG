@@ -1,5 +1,8 @@
 package MapGraph;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.scanner;
 
 
 public class MapGraph
@@ -15,14 +18,14 @@ public class MapGraph
 	//Constructor generates 2D MapArray based on given size
 	public MapGraph(int size)
 	{
-		JunctionConstructor J = new JunctionConstructor();
+		String FilePath = "map.txt";
 		this.CurrentPlayer = 1;
 		this.PlayerList = [1,2];
 		this.TurnCounter = 0;
 		this.ActiveGoalList = new Goal[3];
 		this.MapArray = new boolean[size][size];
 		this.TrainList = new ArrayList<Integer>();
-		this.JunctionList = J.GetJunctionList();
+		this.JunctionList = this.GetJunctionList(FilePath);
 		this.CreateMapArray();
 	}
 	
@@ -42,7 +45,20 @@ public class MapGraph
 			}
 		}
 	}
-	
+
+	private ArrayList<Junction> GetJunctionList(String File) {
+		File map = new File(File);
+		
+		try {
+			Scanner sc = new Scanner(map);
+			
+			while(sc.hasNextLine()) {
+				String i = sc.nextLine();
+				
+			}
+		}
+	}
+
 	//Moves the Train from a specified location to a specified destination
 	protected void MoveTrain(int TrainID, int Location, int Destination)
 	{
