@@ -12,10 +12,10 @@ public class Junction {
 	//Overloaded constructors for instantiating Junction with fewer arguments
 	public Junction(int ID)
 	{
-		this(ID, null, null);
+		this(ID, null);
 	}
 
-	public Junction(int ID, int[][] JunctionsConnected, int[] TrainsPresent)
+	public Junction(int ID, int[][] JunctionsConnected)
 	{
 		this.JunctionID = ID;
 		this.TrainsPresent = new ArrayList<Integer>();
