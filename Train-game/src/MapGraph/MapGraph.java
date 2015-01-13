@@ -3,7 +3,7 @@ package MapGraph;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.scanner;
+import java.util.Scanner;
 
 
 public class MapGraph
@@ -19,9 +19,9 @@ public class MapGraph
 	//Constructor generates 2D MapArray based on given size
 	public MapGraph(int size)
 	{
-		String FilePath = "map.txt";
+		String FilePath = "../dat/map";
 		this.CurrentPlayer = 1;
-		this.PlayerList = [1,2];
+		this.PlayerList = new int[] {1,2};
 		this.TurnCounter = 0;
 		this.ActiveGoalList = new Goal[3];
 		this.MapArray = new boolean[size][size];
@@ -50,7 +50,9 @@ public class MapGraph
 	//Initializes all of the junction objects and links them together for the map.
 	private ArrayList<Junction> GetJunctionList(String File) {
 		int ID;					//Identification Number
-		int[][] JCL;			//Junction Connected List
+		int[] connectionList;
+		int[][] JCL;
+		ArrayList<int[]> jcl = new ArrayList<int[]>();			//Junction Connected List
 		ArrayList<Integer> TL;	//Train List
 		File map = new File(File);
 		ArrayList<Junction> jList = new ArrayList<Junction>();
@@ -65,13 +67,26 @@ public class MapGraph
 				
 				ID = sc.nextInt();
 				
-				while(s != "|") {
+				while(!s.equals("/")) {
+					junctionLine = sc.nextLine().split(delims);
+					connectionList = new int[junctionLine.length];
 					
+					for(int i=0; i<junctionLine.length; i++) {
+						connectionList[i] = Integer.parseInt(junctionLine[i]);
+					}
+					
+					jcl.append(connectionList);
 				}
+				
+				JCL = jcl.toArray();
 				
 				jList.append(new Junction(ID, JCL, TL));
 			}
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
 		}
+		
+		return jList;
 	}
 
 	//Moves the Train from a specified location to a specified destination
