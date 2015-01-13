@@ -15,7 +15,7 @@ public class MapGraph
 	int[][] MapArray;
 	ArrayList<Integer> TrainList;
 	Junction[] JunctionList;
-	
+
 	//Constructor generates 2D MapArray based on given size
 	public MapGraph(int size)
 	{
@@ -29,7 +29,7 @@ public class MapGraph
 		this.JunctionList = this.GetJunctionList(FilePath);
 		this.CreateMapArray();
 	}
-	
+
 	//Takes the JunctionList and generates a 2D MapArray from their respective JunctionConnectedList
 	protected void CreateMapArray()
 	{
@@ -40,7 +40,7 @@ public class MapGraph
 			for(int connection : j.GetConnectedJunctions())
 			{
 				int Next = j.FindNext(connection);
-				
+
 				this.MapArray[index][next] = true;
 				this.MapArray[next][index] = true;
 			}
@@ -56,36 +56,36 @@ public class MapGraph
 		ArrayList<Integer> TL;	//Train List
 		File map = new File(File);
 		ArrayList<Junction> jList = new ArrayList<Junction>();
-		
+
 		try {
 			String delims = ",";
 			Scanner sc = new Scanner(map);
-			
+
 			while(sc.hasNextLine()) {
 				String s;
 				String[] junctionLine;
-				
+
 				ID = sc.nextInt();
-				
+
 				while(!s.equals("/")) {
 					junctionLine = sc.nextLine().split(delims);
 					connectionList = new int[junctionLine.length];
-					
+
 					for(int i=0; i<junctionLine.length; i++) {
 						connectionList[i] = Integer.parseInt(junctionLine[i]);
 					}
-					
+
 					jcl.append(connectionList);
 				}
-				
+
 				JCL = jcl.toArray();
-				
-				jList.append(new Junction(ID, JCL, TL));
+
+				jList.append(new Junction(ID, JCL));
 			}
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		return jList;
 	}
 
@@ -93,7 +93,7 @@ public class MapGraph
 	protected void MoveTrain(int TrainID, int Location, int Destination)
 	{
 		Junction JunctLocation = JunctionList[Location];
-		
+
 		if(JunctLocation.IsPresent(Integer.valueOf(TrainID)))
 		{
 			int NewLoc = JunctLocation.FindNext(Destination);
@@ -101,39 +101,39 @@ public class MapGraph
 			JunctionList[NewLoc].AddTrain(Integer.valueOf(TrainID));
 		}
 	}
-	
+
 	//Increments the turn counter
 	protected void IncrementTurn()
 	{
 		this.TurnCounter++;
 	}
-	
+
 	//Adds the Goal to the GoalList
 	protected void AddGoal(Goal goal)
 	{
 		this.ActiveGoalList.add(goal);
 	}
-	
+
 	//Removes the Goal from the GoalList
 	protected void RemoveGoal(Goal goal)
 	{
 		this.ActiveGoalList.remove(goal);
 	}
-	
+
 	//Adds the Train to the specified Junction
 	protected void AddTrain(int TrainID, int Location)
 	{
 		this.TrainList.add(Integer.valueOf(TrainID));
 		this.JunctionList[Location].AddTrain(TrainID);
 	}
-	
+
 	//Removes the Train from the specified Junction
 	protected void RemoveTrain(int TrainID, int Location)
 	{
 		this.TrainList.remove(Integer.valueOf(TrainID));
 		this.JunctionList[Location].RemoveTrain(TrainID);
 	}
-	
+
 	//Changes CurrentPlayer to indicate a new turn.
 	protected void ChangePlayer()
 	{

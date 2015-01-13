@@ -8,10 +8,10 @@ public class Junction {
 	int JunctionID;
 	int[][] JunctionsConnectedList;
 	ArrayList<Integer> TrainsPresent;
-	
+
 	//Overloaded constructors for instantiating Junction with fewer arguments
 	public Junction(int ID)
-	{	
+	{
 		this(ID, null, null);
 	}
 
@@ -19,7 +19,7 @@ public class Junction {
 	{
 		this.JunctionID = ID;
 		this.TrainsPresent = new ArrayList<Integer>();
-		
+
 		if(JunctionsConnected != null)
 		{
 			this.JunctionsConnectedList = JunctionsConnected;
@@ -28,51 +28,43 @@ public class Junction {
 		{
 			this.JunctionsConnectedList = new int[1][1];
 		}
-		
-		if(TrainsPresent != null)
-		{
-			for(int Train : TrainsPresent)
-			{
-				this.TrainsPresent.add(Integer.valueOf(Train));
-			}
-		}
 	}
-	
+
 	protected int GetID()
 	{
 		return this.JunctionID;
 	}
-	
+
 	//Adds Train to the TrainsPresent list
 	protected void AddTrain(Integer TrainID)
 	{
 		this.TrainsPresent.add(TrainID);
 	}
-	
+
 	//Removes Train from the TrainsPresent list
 	protected void RemoveTrain(Integer TrainID)
 	{
 		this.TrainsPresent.remove(TrainID);
 	}
-	
+
 	protected int[] GetConnectedJunctions()
 	{
 		int Size = this.JunctionsConnectedList.length;
 		int[] ReturnArray = new int[Size];
-		
+
 		for(int i=0; i<Size; i++)
 		{
 			ReturnArray[i] = this.JunctionsConnectedList[i][0];
 		}
-		
+
 		return ReturnArray;
 	}
-	
+
 	protected ArrayList<Integer> GetTrains()
 	{
 		return this.TrainsPresent;
 	}
-	
+
 
 	protected boolean IsPresent(Integer TrainID)
 	{
@@ -82,7 +74,7 @@ public class Junction {
 	protected int FindNext(int Destination)
 	{
 		int Dest;
-		
+
 		for(int i=0; i<this.JunctionsConnectedList.length; i++)
 		{
 			if(this.JunctionsConnectedList[i][0] == Destination)
