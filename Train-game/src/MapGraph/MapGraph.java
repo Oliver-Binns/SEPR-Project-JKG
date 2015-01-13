@@ -11,8 +11,8 @@ public class MapGraph
 	int CurrentPlayer;
 	int[] PlayerList;
 	int TurnCounter;
-	Goal[] ActiveGoalList;
-	int[][] MapArray;
+	ArrayList<Goal> ActiveGoalList;
+	boolean[][] MapArray;
 	ArrayList<Integer> TrainList;
 	Junction[] JunctionList;
 
@@ -23,7 +23,7 @@ public class MapGraph
 		this.CurrentPlayer = 1;
 		this.PlayerList = new int[] {1,2};
 		this.TurnCounter = 0;
-		this.ActiveGoalList = new Goal[3];
+		this.ActiveGoalList = new ArrayList<Goal>();
 		this.MapArray = new boolean[size][size];
 		this.TrainList = new ArrayList<Integer>();
 		this.JunctionList = this.GetJunctionList(FilePath);
@@ -39,7 +39,7 @@ public class MapGraph
 			this.MapArray[index][index] = true;
 			for(int connection : j.GetConnectedJunctions())
 			{
-				int Next = j.FindNext(connection);
+				int next = j.FindNext(connection);
 
 				this.MapArray[index][next] = true;
 				this.MapArray[next][index] = true;
@@ -48,12 +48,12 @@ public class MapGraph
 	}
 
 	//Initializes all of the junction objects and links them together for the map.
-	private ArrayList<Junction> GetJunctionList(String File) {
-		int ID;					//Identification Number
+	private Junction[] GetJunctionList(String File) {
+		int ID;
 		int[] connectionList;
 		int[][] JCL;
-		ArrayList<int[]> jcl = new ArrayList<int[]>();			//Junction Connected List
-		ArrayList<Integer> TL;	//Train List
+		ArrayList<int[]> jcl = new ArrayList<int[]>();
+		ArrayList<Integer> TL;
 		File map = new File(File);
 		ArrayList<Junction> jList = new ArrayList<Junction>();
 
@@ -65,7 +65,9 @@ public class MapGraph
 				String s;
 				String[] junctionLine;
 
-				ID = sc.nextInt();
+				ID = Integer.parseInt(sc.nextLine());
+
+				s = sc.nextLine();
 
 				while(!s.equals("/")) {
 					junctionLine = sc.nextLine().split(delims);
@@ -75,18 +77,20 @@ public class MapGraph
 						connectionList[i] = Integer.parseInt(junctionLine[i]);
 					}
 
-					jcl.append(connectionList);
+					jcl.add(connectionList);
+
+					s = sc.nextLine();
 				}
 
-				JCL = jcl.toArray();
+				JCL = (int[][])jcl.toArray();
 
-				jList.append(new Junction(ID, JCL));
+				jList.add(new Junction(ID, JCL));
 			}
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		return jList;
+		return (Junction[])jList.toArray();
 	}
 
 	//Moves the Train from a specified location to a specified destination

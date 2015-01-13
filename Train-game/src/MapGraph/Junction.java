@@ -68,7 +68,7 @@ public class Junction {
 
 	protected boolean IsPresent(Integer TrainID)
 	{
-		return TrainsPresent.contains(Integer TrainID);
+		return TrainsPresent.contains(TrainID);
 	}
 
 	protected int FindNext(int Destination)
