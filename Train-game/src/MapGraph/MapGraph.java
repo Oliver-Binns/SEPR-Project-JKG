@@ -5,16 +5,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/*
+MapGraph is the main class, it represents the map structure and is what the game engine will be interacting with
+*/
 
 public class MapGraph
 {
-	int CurrentPlayer;
-	int[] PlayerList;
-	int TurnCounter;
-	ArrayList<Goal> ActiveGoalList;
-	boolean[][] MapArray;
-	ArrayList<Integer> TrainList;
-	Junction[] JunctionList;
+	int CurrentPlayer;	//The current player number, used to represent who's turn it is
+	int[] PlayerList;	//The list of players that are playing
+	int TurnCounter;	//The number of turns that have passed since the beginning of the game
+	ArrayList<Goal> ActiveGoalList;	//The list of goals (max 3) that are available to the players at any point
+	boolean[][] MapArray;	//A 2D array representing all of the connections between each junction
+	ArrayList<Integer> TrainList;	//An arraylist of trains that are currently active on the map
+	Junction[] JunctionList;	//A list of junctions contained in the map (includes stations and checkpoints)
 
 	//Constructor generates 2D MapArray based on given size
 	public MapGraph(int size)
@@ -57,6 +60,7 @@ public class MapGraph
 		File map = new File(File);
 		ArrayList<Junction> jList = new ArrayList<Junction>();
 
+		//This try block reads junction information from a file (/dat/map) and instantiates each junction, it returns a list of junctions that it contains
 		try {
 			String delims = ",";
 			Scanner sc = new Scanner(map);

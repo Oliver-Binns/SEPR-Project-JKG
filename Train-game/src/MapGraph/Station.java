@@ -1,8 +1,12 @@
 package MapGraph;
 
+/*
+Station is a sub-class of Junction that has extra properties, they will act as destinations for players.
+*/
+
 public class Station extends Junction
 {
-	String Name;
+	String Name;	//Name of the station
 	
 	//Overloaded constructors for instantiating Station with fewer arguments
 	public Station(int ID)
