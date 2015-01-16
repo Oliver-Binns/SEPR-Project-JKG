@@ -77,4 +77,8 @@ public class SEPR extends ApplicationAdapter {
 		playerShop.render();
 		mainStage.draw();
 	}
+	
+	public void incrementTurn() {
+		
+	}
 }
