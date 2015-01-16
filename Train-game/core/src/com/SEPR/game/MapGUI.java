@@ -1,7 +1,6 @@
 package com.SEPR.game;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +19,8 @@ public class MapGUI extends Game
 	
 	SpriteDrawable stationButtonSprite;
 	SpriteDrawable stationButtonCheckedSprite;
+	SpriteDrawable junctionButtonSprite;
+	SpriteDrawable junctionButtonCheckedSprite;
 	SpriteDrawable electricTrainSprite;
 	SpriteDrawable electricTrainCheckedSprite;
 	SpriteDrawable dieselTrainSprite;
@@ -28,6 +29,7 @@ public class MapGUI extends Game
 	SpriteDrawable flyingTrainCheckedSprite;
 	
 	ImageButtonStyle stationButtonStyle;
+	ImageButtonStyle junctionButtonStyle;
 	TextButtonStyle electricTrainButtonStyle;
 	TextButtonStyle dieselTrainButtonStyle;
 	TextButtonStyle flyingTrainButtonStyle;
@@ -39,15 +41,18 @@ public class MapGUI extends Game
 	
 	ImageButton[] stationButton;
 	Coordinates[] stationCoordinates;
-	List<TextButton> trainButton;
+	ArrayList<TextButton> trainButton;
 	
 	@Override
 	public void create()
 	{
-		stationCount = 25;
+		stationCount = 88;
 		
 		stationButtonSprite = new SpriteDrawable(new Sprite(new Texture("images/stationButton.png")));
 		stationButtonCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/stationButtonChecked.png")));
+		
+		junctionButtonSprite = new SpriteDrawable(new Sprite(new Texture("images/junctionButton.png")));
+		junctionButtonCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/junctionButtonChecked.png")));
 		
 		electricTrainSprite = new SpriteDrawable(new Sprite(new Texture("images/electricTrain.png")));
 		electricTrainCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/electricTrainChecked.png")));
@@ -60,6 +65,10 @@ public class MapGUI extends Game
 		stationButtonStyle.up = stationButtonSprite;
 		stationButtonStyle.down = stationButtonSprite;
 		stationButtonStyle.checked = stationButtonCheckedSprite;
+		
+		junctionButtonStyle = new ImageButtonStyle();
+		junctionButtonStyle.up = junctionButtonSprite;
+		junctionButtonStyle.checked = junctionButtonCheckedSprite;
 		
 		electricTrainButtonStyle = new TextButtonStyle();
 		electricTrainButtonStyle.font = SEPR.font;
@@ -102,26 +111,98 @@ public class MapGUI extends Game
 		stationCoordinates[22] = new Coordinates(1054, 449);
 		stationCoordinates[23] = new Coordinates(1098, 647);
 		stationCoordinates[24] = new Coordinates(1132, 186);
+		stationCoordinates[25] = new Coordinates(513 * ((float)SEPR.WIDTH/1680), (1050 - 398) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[26] = new Coordinates(573 * ((float)SEPR.WIDTH/1680), (1050 - 404) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[27] = new Coordinates(688 * ((float)SEPR.WIDTH/1680), (1050 - 486) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[28] = new Coordinates(704 * ((float)SEPR.WIDTH/1680), (1050 - 495) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[29] = new Coordinates(735 * ((float)SEPR.WIDTH/1680), (1050 - 535) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[30] = new Coordinates(703 * ((float)SEPR.WIDTH/1680), (1050 - 627) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[31] = new Coordinates(685 * ((float)SEPR.WIDTH/1680), (1050 - 735) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[32] = new Coordinates(575 * ((float)SEPR.WIDTH/1680), (1050 - 817) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[33] = new Coordinates(460 * ((float)SEPR.WIDTH/1680), (1050 - 888) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[34] = new Coordinates(471 * ((float)SEPR.WIDTH/1680), (1050 - 835) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[35] = new Coordinates(400 * ((float)SEPR.WIDTH/1680), (1050 - 734) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[36] = new Coordinates(347 * ((float)SEPR.WIDTH/1680), (1050 - 860) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[37] = new Coordinates(354 * ((float)SEPR.WIDTH/1680), (1050 - 937) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[38] = new Coordinates(446 * ((float)SEPR.WIDTH/1680), (1050 - 932) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[39] = new Coordinates(782 * ((float)SEPR.WIDTH/1680), (1050 - 522) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[40] = new Coordinates(858 * ((float)SEPR.WIDTH/1680), (1050 - 607) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[41] = new Coordinates(903 * ((float)SEPR.WIDTH/1680), (1050 - 631) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[42] = new Coordinates(836 * ((float)SEPR.WIDTH/1680), (1050 - 692) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[43] = new Coordinates(903 * ((float)SEPR.WIDTH/1680), (1050 - 631) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[44] = new Coordinates(919 * ((float)SEPR.WIDTH/1680), (1050 - 759) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[45] = new Coordinates(979 * ((float)SEPR.WIDTH/1680), (1050 - 777) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[46] = new Coordinates(958 * ((float)SEPR.WIDTH/1680), (1050 - 706) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[47] = new Coordinates(1006 * ((float)SEPR.WIDTH/1680), (1050 - 677) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[48] = new Coordinates(1001 * ((float)SEPR.WIDTH/1680), (1050 - 645) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[49] = new Coordinates(1292 * ((float)SEPR.WIDTH/1680), (1050 - 928) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[50] = new Coordinates(1280 * ((float)SEPR.WIDTH/1680), (1050 - 875) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[51] = new Coordinates(1315 * ((float)SEPR.WIDTH/1680), (1050 - 845) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[52] = new Coordinates(1340 * ((float)SEPR.WIDTH/1680), (1050 - 825) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[53] = new Coordinates(1416 * ((float)SEPR.WIDTH/1680), (1050 - 824) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[54] = new Coordinates(1459 * ((float)SEPR.WIDTH/1680), (1050 - 792) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[55] = new Coordinates(1411 * ((float)SEPR.WIDTH/1680), (1050 - 776) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[56] = new Coordinates(1123 * ((float)SEPR.WIDTH/1680), (1050 - 763) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[57] = new Coordinates(1409 * ((float)SEPR.WIDTH/1680), (1050 - 723) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[58] = new Coordinates(573 * ((float)SEPR.WIDTH/1680), (1050 - 404) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[59] = new Coordinates(1292 * ((float)SEPR.WIDTH/1680), (1050 - 664) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[60] = new Coordinates(1186 * ((float)SEPR.WIDTH/1680), (1050 - 661) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[61] = new Coordinates(1363 * ((float)SEPR.WIDTH/1680), (1050 - 618) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[62] = new Coordinates(1029 * ((float)SEPR.WIDTH/1680), (1050 - 599) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[63] = new Coordinates(820 * ((float)SEPR.WIDTH/1680), (1050 - 408) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[64] = new Coordinates(879 * ((float)SEPR.WIDTH/1680), (1050 - 408) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[64] = new Coordinates(912 * ((float)SEPR.WIDTH/1680), (1050 - 228) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[65] = new Coordinates(941 * ((float)SEPR.WIDTH/1680), (1050 - 197) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[66] = new Coordinates(966 * ((float)SEPR.WIDTH/1680), (1050 - 450) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[67] = new Coordinates(980 * ((float)SEPR.WIDTH/1680), (1050 - 400) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[68] = new Coordinates(1002 * ((float)SEPR.WIDTH/1680), (1050 - 62) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[69] = new Coordinates(1002 * ((float)SEPR.WIDTH/1680), (1050 - 481) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[70] = new Coordinates(945 * ((float)SEPR.WIDTH/1680), (1050 - 650) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[71] = new Coordinates(1280 * ((float)SEPR.WIDTH/1680), (1050 - 876) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[72] = new Coordinates(1382 * ((float)SEPR.WIDTH/1680), (1050 - 717) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[73] = new Coordinates(879 * ((float)SEPR.WIDTH/1680), (1050 - 408) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[74] = new Coordinates(1076 * ((float)SEPR.WIDTH/1680), (1050 - 577) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[75] = new Coordinates(1300 * ((float)SEPR.WIDTH/1680), (1050 - 569) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[76] = new Coordinates(1025 * ((float)SEPR.WIDTH/1680), (1050 - 563) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[77] = new Coordinates(1139 * ((float)SEPR.WIDTH/1680), (1050 - 559) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[78] = new Coordinates(1149 * ((float)SEPR.WIDTH/1680), (1050 - 505) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[79] = new Coordinates(1454 * ((float)SEPR.WIDTH/1680), (1050 - 494) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[80] = new Coordinates(1230 * ((float)SEPR.WIDTH/1680), (1050 - 474) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[81] = new Coordinates(1553 * ((float)SEPR.WIDTH/1680), (1050 - 462) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[82] = new Coordinates(1029 * ((float)SEPR.WIDTH/1680), (1050 - 401) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[83] = new Coordinates(1053 * ((float)SEPR.WIDTH/1680), (1050 - 375) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[84] = new Coordinates(1175 * ((float)SEPR.WIDTH/1680), (1050 - 364) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[85] = new Coordinates(1289 * ((float)SEPR.WIDTH/1680), (1050 - 361) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[86] = new Coordinates(1311 * ((float)SEPR.WIDTH/1680), (1050 - 341) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[87] = new Coordinates(1492 * ((float)SEPR.WIDTH/1680), (1050 - 336) * ((float)SEPR.HEIGHT/1050));
 		
 		stationButton = new ImageButton[stationCount];
-		for(i = 0; i < stationCount; i++)
+		for(i = 0; i < 25; i++)
 		{
 			stationButton[i] = new ImageButton(stationButtonStyle);
 			SEPR.mainStage.addActor(stationButton[i]);
 			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
 		}
 		
-		for(i = 0; i < stationCount - 1; i++)
+		for(i = 25; i < stationCount; i++)
+		{
+			stationButton[i] = new ImageButton(junctionButtonStyle);
+			SEPR.mainStage.addActor(stationButton[i]);
+			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
+		}
+		
+		for(i = 0; i < stationCount; i++)
 		{
 			stationButton[i].addListener(new ClickListener()
 			{
 				final int b = i;
 				public void clicked(InputEvent event, float x, float y)
 				{	
-					for(int c = 0; c < stationCount - 1; c++)
+					for(int c = 0; c < stationCount; c++)
 					{
 						stationButton[c].setChecked(false);
 					}
+					System.out.println(String.valueOf(b));
 					stationButton[b].setChecked(true);
 				}
 			});
@@ -132,10 +213,24 @@ public class MapGUI extends Game
 		//mapGraph = new MapGraph();
 	}
 	
+	/*
 	public void updateTrainList(Player player)
 	{
 		//This will get the list of trains owned by a player to display them on screen as buttons so that they can be moved
+		ArrayList<Train> trainList = new ArrayList<Train>(player.getTrainList());
+		
+		for(int i = 0; i < trainList.size(); i++)
+		{
+			switch(trainList.getEngineType())
+			{
+			case 1:
+				trainButton[i] = new TextButton(trainList.getTier(), electricTrainButtonStyle);
+			case 2:
+				trainButton[i]
+			}
+		}
 	}
+	*/
 	
 	@Override
 	public void render()
