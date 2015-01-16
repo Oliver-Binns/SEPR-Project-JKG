@@ -5,16 +5,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/*
+MapGraph is the main class, it represents the map structure and is what the game engine will be interacting with
+*/
 
 public class MapGraph
 {
-	int CurrentPlayer;
-	int[] PlayerList;
-	int TurnCounter;
-	Goal[] ActiveGoalList;
-	int[][] MapArray;
-	ArrayList<Integer> TrainList;
-	Junction[] JunctionList;
+	int CurrentPlayer;	//The current player number, used to represent who's turn it is
+	int[] PlayerList;	//The list of players that are playing
+	int TurnCounter;	//The number of turns that have passed since the beginning of the game
+	ArrayList<Goal> ActiveGoalList;	//The list of goals (max 3) that are available to the players at any point
+	boolean[][] MapArray;	//A 2D array representing all of the connections between each junction
+	ArrayList<Integer> TrainList;	//An arraylist of trains that are currently active on the map
+	Junction[] JunctionList;	//A list of junctions contained in the map (includes stations and checkpoints)
 
 	//Constructor generates 2D MapArray based on given size
 	public MapGraph(int size)
@@ -23,7 +26,7 @@ public class MapGraph
 		this.CurrentPlayer = 1;
 		this.PlayerList = new int[] {1,2};
 		this.TurnCounter = 0;
-		this.ActiveGoalList = new Goal[3];
+		this.ActiveGoalList = new ArrayList<Goal>();
 		this.MapArray = new boolean[size][size];
 		this.TrainList = new ArrayList<Integer>();
 		this.JunctionList = this.GetJunctionList(FilePath);
@@ -39,7 +42,7 @@ public class MapGraph
 			this.MapArray[index][index] = true;
 			for(int connection : j.GetConnectedJunctions())
 			{
-				int Next = j.FindNext(connection);
+				int next = j.FindNext(connection);
 
 				this.MapArray[index][next] = true;
 				this.MapArray[next][index] = true;
@@ -48,15 +51,16 @@ public class MapGraph
 	}
 
 	//Initializes all of the junction objects and links them together for the map.
-	private ArrayList<Junction> GetJunctionList(String File) {
-		int ID;					//Identification Number
+	private Junction[] GetJunctionList(String File) {
+		int ID;
 		int[] connectionList;
 		int[][] JCL;
-		ArrayList<int[]> jcl = new ArrayList<int[]>();			//Junction Connected List
-		ArrayList<Integer> TL;	//Train List
+		ArrayList<int[]> jcl = new ArrayList<int[]>();
+		ArrayList<Integer> TL;
 		File map = new File(File);
 		ArrayList<Junction> jList = new ArrayList<Junction>();
 
+		//This try block reads junction information from a file (/dat/map) and instantiates each junction, it returns a list of junctions that it contains
 		try {
 			String delims = ",";
 			Scanner sc = new Scanner(map);
@@ -65,7 +69,9 @@ public class MapGraph
 				String s;
 				String[] junctionLine;
 
-				ID = sc.nextInt();
+				ID = Integer.parseInt(sc.nextLine());
+
+				s = sc.nextLine();
 
 				while(!s.equals("/")) {
 					junctionLine = sc.nextLine().split(delims);
@@ -75,18 +81,20 @@ public class MapGraph
 						connectionList[i] = Integer.parseInt(junctionLine[i]);
 					}
 
-					jcl.append(connectionList);
+					jcl.add(connectionList);
+
+					s = sc.nextLine();
 				}
 
-				JCL = jcl.toArray();
+				JCL = (int[][])jcl.toArray();
 
-				jList.append(new Junction(ID, JCL));
+				jList.add(new Junction(ID, JCL));
 			}
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		return jList;
+		return (Junction[])jList.toArray();
 	}
 
 	//Moves the Train from a specified location to a specified destination
