@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import java.util.Random;
 
 public class SEPR extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -79,6 +80,31 @@ public class SEPR extends ApplicationAdapter {
 	}
 	
 	public void incrementTurn() {
+		int completedGoals;
+		mapGraph.IncrementTurn();
+		mapGraph.changePlayer();
+		for(Goal goal : mapGraph.ActiveGoalList) {
+			if(goal.checkComplete) {
+				mapGraph.RemoveGoal(goal);
+				completedGoals ++;
+			}
+		}
 		
+		for(int i=0; i<completedGoals; i++) {
+			mapGraph.AddGoal(this.createGoal(i));
+		}
+	}
+	
+	public Goal createGoal(int ID) {
+		Random rn = new Random();
+		int i = rn.nextInt() % 100;
+		int destination = rn.nextInt() % 24;
+		
+		if(i>60) {
+			int startLoc = rn.nextInt() % 24;
+			return new GetToStationVieDestinationGoal(ID, startLoc, destination, 0, 5);
+		} else {
+			return new GetToDestinationGoal(ID, destination, 5);
+		}
 	}
 }
