@@ -15,7 +15,7 @@ public class Junction {
 		this(ID, null, null);
 	}
 
-	public Junction(int ID, int[][] JunctionsConnected, int[] TrainsPresent)
+	public Junction(int ID, int[][] JunctionsConnected)
 	{
 		this.JunctionID = ID;
 		this.TrainsPresent = new ArrayList<Integer>();
