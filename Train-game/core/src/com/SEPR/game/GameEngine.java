@@ -11,9 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
 import java.util.Random;
 
-public class SEPR extends ApplicationAdapter {
+public class GameEngine extends ApplicationAdapter {
 	SpriteBatch batch;
 	static BitmapFont font;
 	Texture map;
@@ -45,7 +46,7 @@ public class SEPR extends ApplicationAdapter {
 		labelStyle = new LabelStyle();
 		labelStyle.font = font;
 		
-		map = new Texture("images/SEPRMap.png");
+		map = new Texture("images/SEPRMap.jpg");
 		
 		viewport = new FitViewport(WIDTH, HEIGHT);
 		mainStage = new Stage();
@@ -78,7 +79,7 @@ public class SEPR extends ApplicationAdapter {
 		playerShop.render();
 		mainStage.draw();
 	}
-	
+	/*
 	public void incrementTurn() {
 		int completedGoals;
 		mapGraph.IncrementTurn();
@@ -107,4 +108,5 @@ public class SEPR extends ApplicationAdapter {
 			return new GetToDestinationGoal(ID, destination, 5);
 		}
 	}
+	*/
 }

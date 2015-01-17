@@ -53,26 +53,26 @@ public class PlayerShop extends Game
 		batch = new SpriteBatch();
 		shopBackground = new Texture("images/shopBackground.png");
 		sprite = new Sprite(shopBackground);
-		sprite.setSize(SEPR.WIDTH / 5, SEPR.HEIGHT);
+		sprite.setSize(GameEngine.WIDTH / 5, GameEngine.HEIGHT);
 		sprite.setColor(1f, 1f, 1f, 0.3f);
 		
-		showShopButton = new TextButton("Shop", SEPR.textButtonStyle);
-		showShopButton.setPosition(10, SEPR.HEIGHT - 20);
+		showShopButton = new TextButton("Shop", GameEngine.textButtonStyle);
+		showShopButton.setPosition(10, GameEngine.HEIGHT - 20);
 		
-		electricT1 = new TextButton("Tier 1", SEPR.textButtonStyle);
-		electricT2 = new TextButton("Tier 2", SEPR.textButtonStyle);
-		electricT3 = new TextButton("Tier 3", SEPR.textButtonStyle);
-		dieselT1 = new TextButton("Tier 1", SEPR.textButtonStyle);
-		dieselT2 = new TextButton("Tier 2", SEPR.textButtonStyle);
-		dieselT3 = new TextButton("Tier 3", SEPR.textButtonStyle);
-		flyingT1 = new TextButton("Tier 1", SEPR.textButtonStyle);
-		flyingT2 = new TextButton("Tier 2", SEPR.textButtonStyle);
+		electricT1 = new TextButton("Tier 1", GameEngine.textButtonStyle);
+		electricT2 = new TextButton("Tier 2", GameEngine.textButtonStyle);
+		electricT3 = new TextButton("Tier 3", GameEngine.textButtonStyle);
+		dieselT1 = new TextButton("Tier 1", GameEngine.textButtonStyle);
+		dieselT2 = new TextButton("Tier 2", GameEngine.textButtonStyle);
+		dieselT3 = new TextButton("Tier 3", GameEngine.textButtonStyle);
+		flyingT1 = new TextButton("Tier 1", GameEngine.textButtonStyle);
+		flyingT2 = new TextButton("Tier 2", GameEngine.textButtonStyle);
 		
-		engines = new Label("Engines", SEPR.labelStyle);
-		electric = new Label("Electric", SEPR.labelStyle);
-		diesel = new Label("Diesel", SEPR.labelStyle);
-		flying = new Label("Flying", SEPR.labelStyle);
-		maintenance = new Label("Maintenance", SEPR.labelStyle);
+		engines = new Label("Engines", GameEngine.labelStyle);
+		electric = new Label("Electric", GameEngine.labelStyle);
+		diesel = new Label("Diesel", GameEngine.labelStyle);
+		flying = new Label("Flying", GameEngine.labelStyle);
+		maintenance = new Label("Maintenance", GameEngine.labelStyle);
 		
 		shopTable = new Table();
 		
@@ -94,12 +94,12 @@ public class PlayerShop extends Game
 		
 		shopTable.add(maintenance).size(cellWidth, cellHeight);
 		
-		shopTable.setPosition(115, (SEPR.HEIGHT - 95));
+		shopTable.setPosition(115, (GameEngine.HEIGHT - 95));
 		
-		SEPR.mainStage.addActor(showShopButton);
+		GameEngine.mainStage.addActor(showShopButton);
 		
 		shopStage = new Stage();
-		//shopStage.setViewport(SEPR.viewport);
+		//shopStage.setViewport(GameEngine.viewport);
 		shopStage.addActor(shopTable);
 		
 		showShopButton.addListener(new ChangeListener()
@@ -115,8 +115,8 @@ public class PlayerShop extends Game
 				}
 				else
 				{
-					Gdx.input.setInputProcessor(SEPR.mainStage);
-					SEPR.mainStage.addActor(showShopButton);
+					Gdx.input.setInputProcessor(GameEngine.mainStage);
+					GameEngine.mainStage.addActor(showShopButton);
 				}
 			}
 		});

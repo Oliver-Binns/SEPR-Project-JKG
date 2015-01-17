@@ -4,9 +4,9 @@ public class Coordinates
 {
 	float x, y;
 	
-	public Coordinates(int x, int y)
+	public Coordinates(float f, float g)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = f;
+		this.y = g;
 	}
 }
