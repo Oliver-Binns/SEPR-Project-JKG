@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -42,11 +43,14 @@ public class MapGUI extends Game
 	ImageButton[] stationButton;
 	Coordinates[] stationCoordinates;
 	ArrayList<TextButton> trainButton;
+	ArrayList<TextButton> trainButtonList;
+	ArrayList<int[]> trainLocation;
+	Table trainListTable;
 	
 	@Override
 	public void create()
 	{
-		stationCount = 88;
+		stationCount = 100;
 		
 		stationButtonSprite = new SpriteDrawable(new Sprite(new Texture("images/stationButton.png")));
 		stationButtonCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/stationButtonChecked.png")));
@@ -85,6 +89,15 @@ public class MapGUI extends Game
 		flyingTrainButtonStyle.up = flyingTrainSprite;
 		flyingTrainButtonStyle.checked = flyingTrainCheckedSprite;
 		
+		trainButton = new ArrayList<TextButton>();
+		trainButtonList = new ArrayList<TextButton>();
+		trainLocation = new ArrayList<int[]>();
+		trainListTable = new Table();
+		
+		SEPR.mainStage.addActor(trainListTable);
+		
+		//mapGraph = new MapGraph();
+		
 		stationCoordinates = new Coordinates[stationCount];
 		stationCoordinates[0] = new Coordinates(241, 106);
 		stationCoordinates[1] = new Coordinates(276, 172);
@@ -95,14 +108,14 @@ public class MapGUI extends Game
 		stationCoordinates[6] = new Coordinates(589, 449);
 		stationCoordinates[7] = new Coordinates(612, 288);
 		stationCoordinates[8] = new Coordinates(660, 345);
-		stationCoordinates[9] = new Coordinates(722, 168);
-		stationCoordinates[10] = new Coordinates(697, 702);
+		stationCoordinates[10] = new Coordinates(722, 168);
+		stationCoordinates[9] = new Coordinates(697, 702);
 		stationCoordinates[11] = new Coordinates(729, 471);
 		stationCoordinates[12] = new Coordinates(769, 383);
 		stationCoordinates[13] = new Coordinates(808, 694);
 		stationCoordinates[14] = new Coordinates(818, 268);
-		stationCoordinates[15] = new Coordinates(869, 330);
-		stationCoordinates[16] = new Coordinates(869, 479);
+		stationCoordinates[16] = new Coordinates(869, 330);
+		stationCoordinates[15] = new Coordinates(869, 479);
 		stationCoordinates[17] = new Coordinates(897, 610);
 		stationCoordinates[18] = new Coordinates(913, 247);
 		stationCoordinates[19] = new Coordinates(952, 388);
@@ -175,6 +188,18 @@ public class MapGUI extends Game
 		stationCoordinates[85] = new Coordinates(1289 * ((float)SEPR.WIDTH/1680), (1050 - 361) * ((float)SEPR.HEIGHT/1050));
 		stationCoordinates[86] = new Coordinates(1311 * ((float)SEPR.WIDTH/1680), (1050 - 341) * ((float)SEPR.HEIGHT/1050));
 		stationCoordinates[87] = new Coordinates(1492 * ((float)SEPR.WIDTH/1680), (1050 - 336) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[88] = new Coordinates(1526 * ((float)SEPR.WIDTH/1680), (1050 - 272) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[89] = new Coordinates(1139 * ((float)SEPR.WIDTH/1680), (1050 - 282) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[90] = new Coordinates(1147 * ((float)SEPR.WIDTH/1680), (1050 - 234) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[91] = new Coordinates(1487 * ((float)SEPR.WIDTH/1680), (1050 - 227) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[92] = new Coordinates(1196 * ((float)SEPR.WIDTH/1680), (1050 - 220) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[93] = new Coordinates(1233 * ((float)SEPR.WIDTH/1680), (1050 - 221) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[94] = new Coordinates(1310 * ((float)SEPR.WIDTH/1680), (1050 - 208) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[95] = new Coordinates(1381 * ((float)SEPR.WIDTH/1680), (1050 - 208) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[96] = new Coordinates(1162 * ((float)SEPR.WIDTH/1680), (1050 - 165) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[97] = new Coordinates(1078 * ((float)SEPR.WIDTH/1680), (1050 - 154) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[98] = new Coordinates(1049 * ((float)SEPR.WIDTH/1680), (1050 - 31) * ((float)SEPR.HEIGHT/1050));
+		stationCoordinates[99] = new Coordinates(1131 * ((float)SEPR.WIDTH/1680), (1050 - 18) * ((float)SEPR.HEIGHT/1050));
 		
 		stationButton = new ImageButton[stationCount];
 		for(i = 0; i < 25; i++)
@@ -207,27 +232,53 @@ public class MapGUI extends Game
 				}
 			});
 		}
-		
-		trainButton = new ArrayList<TextButton>();
-		
-		//mapGraph = new MapGraph();
 	}
 	
 	/*
 	public void updateTrainList(Player player)
 	{
 		//This will get the list of trains owned by a player to display them on screen as buttons so that they can be moved
-		ArrayList<Train> trainList = new ArrayList<Train>(player.getTrainList());
+		final ArrayList<Train> trainList = new ArrayList<Train>(player.getTrainList());
 		
 		for(int i = 0; i < trainList.size(); i++)
 		{
+			TextButton train;
+			TextButton trainText;
 			switch(trainList.getEngineType())
 			{
 			case 1:
-				trainButton[i] = new TextButton(trainList.getTier(), electricTrainButtonStyle);
+				train = new TextButton(trainList.getTier(), electricTrainButtonStyle);
+				trainButton.add(train);
+				trainText = new TextButton("Electric - Tier " + trainList.getTier(), SEPR.textButtonStyle);
+				trainButtonList.add(trainText);
 			case 2:
-				trainButton[i]
+				train = new TextButton(trainList.getTier(), dieselTrainButtonStyle);
+				trainButton.add(train);
+				trainText = new TextButton("Diesel - Tier " + trainList.getTier(), SEPR.textButtonStyle);
+				trainButtonList.add(trainText);
+			case 3:
+				train = new TextButton(trainList.getTier(), flyingTrainButtonStyle);
+				trainButton.add(train);
+				trainText = new TextButton("Flying - Tier " + trainList.getTier(), SEPR.textButtonStyle);
+				trainButtonList.add(trainText);
 			}
+			trainListTable.add(trainButtonList.get(i)).row();
+		}
+		
+		for(i = 0; i < trainList.size(); i++)
+		{
+			trainButtonList.get(i).addListener(new ClickListener()
+			{
+				final int b = i;
+				public void clicked(InputEvent event, float x, float y)
+				{	
+					for(int c = 0; c < trainList.size(); c++)
+					{
+						trainButton.get(i).setChecked(false);
+					}
+					trainButton.get(i).setChecked(true);
+				}
+			});
 		}
 	}
 	*/
