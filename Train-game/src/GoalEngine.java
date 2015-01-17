@@ -23,17 +23,17 @@ public class GoalEngine {
 		
 		goalDescriptor += "Get to " + getCityName(currentGoals[i].getDestLocID()) + " ";
 		if(currentGoals[i].getNumCarriages() > 1){
-			goalDescriptor += " with at least " + String.valueOf(currentGoals[i].getNumCarriages()) + " carriages ";
+			goalDescriptor += "with at least " + String.valueOf(currentGoals[i].getNumCarriages()) + " carriages ";
 		}
 		
 		if(currentGoals[i] instanceof GetToDestinationGoal){
 			//description for get to destination goal
 		}
 		else{
-			goalDescriptor += " via " + getCityName(currentGoal[i].startLocID());
-			goalDescriptor += " within " + String.valueOf(getTurnLimit());
+			goalDescriptor += "via " + getCityName(currentGoal[i].startLocID());
+			goalDescriptor += "within " + String.valueOf(getTurnLimit());
 		}
-		goalDescriptor += " for $" + String.valueOf(currentGoals[i].getRewardMoney()) + " and " + String.valueOf(currentGoals[i].getRewardPoints())  + " exp.";
+		goalDescriptor += "for $" + String.valueOf(currentGoals[i].getRewardMoney()) + " and " + String.valueOf(currentGoals[i].getRewardPoints())  + " exp.";
 	}
 	
 	public endTurn(ArrayList player1Trains; ArrayList player2Trains; int goalToDestroy){
