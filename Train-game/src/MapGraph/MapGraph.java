@@ -104,16 +104,23 @@ public class MapGraph
 	}
 
 	//Moves the Train from a specified location to a specified destination
-	protected void MoveTrain(int TrainID, int Location, int Destination)
+	protected boolean MoveTrain(int TrainID, int Location, int Destination)
 	{
 		Junction JunctLocation = JunctionList[Location];
 
 		if(JunctLocation.IsPresent(Integer.valueOf(TrainID)))
 		{
 			int NewLoc = JunctLocation.FindNext(Destination);
+			if(NewLoc == -1) {
+				return false;
+			}
 			JunctLocation.RemoveTrain(Integer.valueOf(TrainID));
 			JunctionList[NewLoc].AddTrain(Integer.valueOf(TrainID));
+		} else {
+			return false;
 		}
+		
+		return true;
 	}
 
 	//Increments the turn counter
