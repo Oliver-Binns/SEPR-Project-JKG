@@ -12,12 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import java.util.Random;
-
 public class GameEngine extends ApplicationAdapter {
 	SpriteBatch batch;
 	static BitmapFont font;
 	Texture map;
+	
+	int turnCount = 0;
 	
 	public static final String TITLE = "SEPR Game";
 	public static final int HEIGHT = 800, WIDTH = 1280;
@@ -32,6 +32,14 @@ public class GameEngine extends ApplicationAdapter {
 	PlayerShop playerShop;
 	PlayerInfo playerInfo;
 	MapGUI mapGUI;
+	
+	Player[] player;
+	Player currentPlayer;
+	
+	MapGraph mapGraph;
+	GoalEngine goalEngine;
+	
+	int currentPlayerInt = 0;
 	
 	@Override
 	public void create () {
@@ -48,12 +56,24 @@ public class GameEngine extends ApplicationAdapter {
 		
 		map = new Texture("images/SEPRMap.jpg");
 		
+		player = new Player[2];
+		player[0] = new Player(0, 9);
+		player[1] = new Player(0, 10);
+		player[0].buyNewTrain(0, 1, 0, 0, 0);
+		player[1].buyNewTrain(0, 1, 1, 1, 0);
+		
+		currentPlayer = player[0];
+		
+		goalEngine = new GoalEngine();
+		
 		viewport = new FitViewport(WIDTH, HEIGHT);
 		mainStage = new Stage();
 		//mainStage.setViewport(viewport);
 		
 		mapGUI = new MapGUI();
 		mapGUI.create();
+		
+		mapGraph = new MapGraph(mapGUI.stationCount);
 		
 		playerInfo = new PlayerInfo();
 		playerInfo.create();
@@ -79,34 +99,22 @@ public class GameEngine extends ApplicationAdapter {
 		playerShop.render();
 		mainStage.draw();
 	}
-	/*
-	public void incrementTurn() {
-		int completedGoals;
-		mapGraph.IncrementTurn();
-		mapGraph.changePlayer();
-		for(Goal goal : mapGraph.ActiveGoalList) {
-			if(goal.checkComplete) {
-				mapGraph.RemoveGoal(goal);
-				completedGoals ++;
-			}
-		}
-		
-		for(int i=0; i<completedGoals; i++) {
-			mapGraph.AddGoal(this.createGoal(i));
+	
+	public void nextTurn()
+	{
+		turnCount++;
+		currentPlayerInt = 1 - currentPlayerInt;
+		currentPlayer = player[currentPlayerInt];
+		mapGUI.updateTrainList(currentPlayer);
+		if(currentPlayerInt == 0)
+		{
+			incrementTurn();
 		}
 	}
 	
-	public Goal createGoal(int ID) {
-		Random rn = new Random();
-		int i = rn.nextInt() % 100;
-		int destination = rn.nextInt() % 24;
-		
-		if(i>60) {
-			int startLoc = rn.nextInt() % 24;
-			return new GetToStationVieDestinationGoal(ID, startLoc, destination, 0, 5);
-		} else {
-			return new GetToDestinationGoal(ID, destination, 5);
-		}
+	public void incrementTurn()
+	{
+		mapGUI.updateTrainList(currentPlayer);
+		goalEngine.endTurn(player, ((int)Math.random()*3));
 	}
-	*/
 }

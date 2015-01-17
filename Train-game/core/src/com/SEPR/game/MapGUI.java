@@ -37,20 +37,21 @@ public class MapGUI extends Game
 	TextButtonStyle dieselTrainButtonStyle;
 	TextButtonStyle flyingTrainButtonStyle;
 	
-	//MapGraph mapGraph;
-	//Player player;
+	MapGraph mapGraph;
 	
 	int stationCount;
 	
 	TextButton moveTrainButton;
+	TextButton nextTurn;
 	
 	ImageButton[] stationButton;
 	Coordinates[] stationCoordinates;
 	ArrayList<TextButton> trainButton;
 	ArrayList<TextButton> trainButtonList;
-	ArrayList<int[]> trainLocation;
+	ArrayList<Integer> trainLocation;
+	ArrayList<Boolean> trainMoved;
 	Table trainListTable;
-	final ArrayList<Train> trainList;
+	ArrayList<Train> trainList;
 	
 	@Override
 	public void create()
@@ -59,6 +60,11 @@ public class MapGUI extends Game
 		
 		moveTrainButton = new TextButton("Move", GameEngine.textButtonStyle);
 		moveTrainButton.setPosition(10, 10);
+		GameEngine.mainStage.addActor(moveTrainButton);
+		
+		nextTurn = new TextButton("End turn", GameEngine.textButtonStyle);
+		nextTurn.setPosition(70, 10);
+		GameEngine.mainStage.addActor(nextTurn);
 		
 		stationButtonSprite = new SpriteDrawable(new Sprite(new Texture("images/stationButton.png")));
 		stationButtonCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/stationButtonChecked.png")));
@@ -99,11 +105,12 @@ public class MapGUI extends Game
 		
 		trainButton = new ArrayList<TextButton>();
 		trainButtonList = new ArrayList<TextButton>();
-		trainLocation = new ArrayList<int[]>();
+		trainLocation = new ArrayList<Integer>();
+		trainMoved = new ArrayList<Boolean>();
 		trainListTable = new Table();
 		
 		GameEngine.mainStage.addActor(trainListTable);
-		//mapGraph = new MapGraph();
+		
 		stationCoordinates = new Coordinates[stationCount];
 		stationCoordinates[0] = new Coordinates(241, 106);
 		stationCoordinates[1] = new Coordinates(276, 172);
@@ -244,37 +251,49 @@ public class MapGUI extends Game
 				moveTrain();
 			}
 		});
+		
+		nextTurn.addListener(new ClickListener()
+		{
+			public void clicked(InputEvent event, float x, float y)
+			{
+				
+			}
+		});
 	}
 	
 	public void updateTrainList(Player player)
 	{
 		//This will get the list of trains owned by a player to display them on screen as buttons so that they can be moved
-		trainList = new ArrayList<Train>(player.getTrainList());
+		trainList = new ArrayList<Train>(player.getPlayerTrains());
 		trainListTable.clear();
 		
 		for(int i = 0; i < trainList.size(); i++)
 		{
 			TextButton train;
 			TextButton trainText;
-			switch(trainList.getEngineType())
+			switch(trainList.get(i).getEngineType())
 			{
 			case 1:
-				train = new TextButton(trainList.getTier(), electricTrainButtonStyle);
+				train = new TextButton(String.valueOf(trainList.get(i).getTier()), electricTrainButtonStyle);
 				trainButton.add(train);
-				trainText = new TextButton("Electric - Tier " + trainList.getTier(), GameEngine.textButtonStyle);
+				trainText = new TextButton("Electric - Tier " + trainList.get(i).getTier(), GameEngine.textButtonStyle);
 				trainButtonList.add(trainText);
 			case 2:
-				train = new TextButton(trainList.getTier(), dieselTrainButtonStyle);
+				train = new TextButton(String.valueOf(trainList.get(i).getTier()), dieselTrainButtonStyle);
 				trainButton.add(train);
-				trainText = new TextButton("Diesel - Tier " + trainList.getTier(), GameEngine.textButtonStyle);
+				trainText = new TextButton("Diesel - Tier " + trainList.get(i).getTier(), GameEngine.textButtonStyle);
 				trainButtonList.add(trainText);
 			case 3:
-				train = new TextButton(trainList.getTier(), flyingTrainButtonStyle);
+				train = new TextButton(String.valueOf(trainList.get(i).getTier()), flyingTrainButtonStyle);
 				trainButton.add(train);
-				trainText = new TextButton("Flying - Tier " + trainList.getTier(), GameEngine.textButtonStyle);
+				trainText = new TextButton("Flying - Tier " + trainList.get(i).getTier(), GameEngine.textButtonStyle);
 				trainButtonList.add(trainText);
 			}
+			trainLocation.add(trainList.get(i).getCurrentJunction());
+			trainButtonList.get(i).setPosition(stationCoordinates[trainLocation.get(i)].x, stationCoordinates[trainLocation.get(i)].y);
+			GameEngine.mainStage.addActor(trainButtonList.get(i));
 			trainListTable.add(trainButtonList.get(i)).row();
+			trainMoved.add(false);
 		}
 		
 		GameEngine.mainStage.addActor(trainListTable);
@@ -299,12 +318,20 @@ public class MapGUI extends Game
 	
 	protected void moveTrain()
 	{
-		for(int i = 0; i < trainList.getSpeed(); i++)
+		boolean flag = true;
+		if(trainMoved.get(selectedTrain) == false)
 		{
-			mapGraph.MoveTrain(selectedTrain, trainList.get(selectedTrain).getCurrentJunction(), selectedJunction);
-			if(selectedJunction < 37)
+			for(int i = 0; i < trainList.get(i).getSpeed(); i++)
 			{
-				break;
+				flag = mapGraph.MoveTrain(trainList.get(selectedTrain).getTrainID(), trainLocation.get(selectedTrain), selectedJunction);
+				if(selectedJunction < 37)
+				{
+					break;
+				}
+			}
+			if(flag == true)
+			{
+				trainMoved.set(selectedTrain, false);
 			}
 		}
 	}
