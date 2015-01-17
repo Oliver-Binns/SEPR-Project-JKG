@@ -20,8 +20,10 @@ public class GoalEngine {
 	public String getGoalDescriptor(int i){
 		String goalDescriptor = "Goal " + String.valueOf(i) + ": ";
 		
-		goalDescriptor += "Get to " + getCityName(currentCoals[i].getDestLocID()) + " ";
-		goalDescriptor += "
+		goalDescriptor += "Get to " + getCityName(currentGoals[i].getDestLocID()) + " ";
+		if(currentGoals[i].getNumCarriages() > 1){
+			goalDescriptor += " with at least " + String.valueOf(currentGoals[i].getNumCarriages()) + " carriages ";
+		}
 		
 		if(currentGoals[i] instanceof GetToDestinationGoal){
 			//description for get to destination goal
@@ -29,6 +31,7 @@ public class GoalEngine {
 		else{
 			//description for get to destination via station goal!
 		}
+		goalDescriptor += " for $" + String.valueOf(currentGoals[i].getRewardMoney()) + " and " + String.valueOf(currentGoals[i].getRewardPoints())  + " exp.";
 	}
 	
 	public endTurn(ArrayList player1Trains; ArrayList player2Trains; int goalToDestroy){
