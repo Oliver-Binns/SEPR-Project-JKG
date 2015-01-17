@@ -98,7 +98,7 @@ public class MapGraph extends Game
 			e.printStackTrace();
 		}
 
-		return (Junction[])jList.toArray();
+		return (Junction[])jList.toArray(new Junction[0]);
 	}
 
 	//Moves the Train from a specified location to a specified destination
