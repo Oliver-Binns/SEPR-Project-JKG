@@ -1,4 +1,4 @@
-package MapGraph;
+package com.SEPR.game;
 
 /*
 A checkpoint is a special subclass of junction that is only connected by two tracks, it is used to emulate different lengths of tracks

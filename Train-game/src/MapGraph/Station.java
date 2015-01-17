@@ -1,4 +1,4 @@
-package MapGraph;
+package com.SEPR.game;
 
 /*
 Station is a sub-class of Junction that has extra properties, they will act as destinations for players.

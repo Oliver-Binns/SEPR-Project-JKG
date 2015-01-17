@@ -1,4 +1,4 @@
-package MapGraph;
+package com.SEPR.game;
 
 import java.util.ArrayList;
 
