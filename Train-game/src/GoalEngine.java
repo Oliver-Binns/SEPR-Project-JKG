@@ -1,18 +1,19 @@
 import java.util.ArrayList;
 
 public class GoalEngine {
-	private GetToDestinationGoal[] currentGoals;
+	private ArrayList<Goal> currentGoals;
+	
 	//OBJECT CONSTRUCTOR
 	public GoalEngine(){
-		currentGoals = new GetToDestinationGoal[3];
-		for(int i = 0; i < currentGoals.length; i++){
-			currentGoals[i] = newGoal();
+		currentGoals = new ArrayList<Goal>;
+		for(int i = 0; i < 3; i++){
+			currentGoals.add(newGoal());
 		}
 	}
 	
 	public String[] getGoalDescriptors(){
-		String[] goalDescriptors = new String[currentGoals.length];
-		for(int i = 0; i < currentGoals.length; i++){
+		String[] goalDescriptors = new String[currentGoals.size()];
+		for(int i = 0; i < currentGoals.size(); i++){
 			goalDescriptors[i] = getGoalDescriptor(i);
 		}
 		return goalDescriptors;
@@ -26,14 +27,11 @@ public class GoalEngine {
 			goalDescriptor += "with at least " + String.valueOf(currentGoals[i].getNumCarriages()) + " carriages ";
 		}
 		
-		if(currentGoals[i] instanceof GetToDestinationGoal){
-			//description for get to destination goal
+		if(currentGoals[i] instanceof GetToDestinationViaStationGoal){
+			goalDescriptor += "via " + getCityName(currentGoals.get(i).startLocID());
+			goalDescriptor += "within " + String.valueOf(getTurnLimit()) + " turns ";
 		}
-		else{
-			goalDescriptor += "via " + getCityName(currentGoal[i].startLocID());
-			goalDescriptor += "within " + String.valueOf(getTurnLimit());
-		}
-		goalDescriptor += "for $" + String.valueOf(currentGoals[i].getRewardMoney()) + " and " + String.valueOf(currentGoals[i].getRewardPoints())  + " exp.";
+		goalDescriptor += "for $" + String.valueOf(currentGoals.get(i).getRewardMoney()) + " and " + String.valueOf(currentGoals.get(i).getRewardPoints())  + " exp.";
 	}
 	
 	public endTurn(Player[] players, int goalToDestroy){
@@ -44,11 +42,11 @@ public class GoalEngine {
 			playerPoints[i]= 0;
 		}
 		
-		for(int i = 0; i < currentGoals.length; i++){
+		for(int i = 0; i < currentGoals.size(); i++){
 			Boolean[] completeForPlayer = new Boolean[players.length];
 			int numberPlayersCompleted = 0;
 			for(int j = 0; j < players.length; j++){
-				if(currentGoals[i].checkComplete(players[j])){
+				if(currentGoals.get(i).checkComplete(players[j])){
 					completeForPlayer[j] = true;
 					numberPlayersCompleted++;
 				}
@@ -59,8 +57,8 @@ public class GoalEngine {
 			
 			for(int j = 0; j < players.length; j++){
 				if(completeForPlayer[j]){
-					players[j].increasePlayerScore(currentGoals[i].getRewardPoints() / numberPlayersCompleted);
-					players[j].increasePlayerWealth(currentGoals[i].getRewardMoney() / numberPlayersCompleted);
+					players[j].increasePlayerScore(currentGoals.get(i).getRewardPoints() / numberPlayersCompleted);
+					players[j].increasePlayerWealth(currentGoals.get(i).getRewardMoney() / numberPlayersCompleted);
 				}
 			}
 			
@@ -72,21 +70,25 @@ public class GoalEngine {
 	}
 	
 	public void destroyGoal(int goalID){
-		currentGoals[goalID] = newGoal(goalID);
+		currentGoals.set(goalID, newGoal(goalID));
 	}
 	
-	private GetToDestinationGoal newGoal(int goalID){
-		GetToDestinationGoal createdGoal;
+	private Goal newGoal(int goalID){
+		int r = random(0, 2);
 		
 		int destLoc = random(0, 24);
-		
 		int rewardMoney = random(1000, 3000);
 		int rewardPoints = random(1000, 3000);
 		
-		createdGoal = new GetToDestinationGoal(goalID, destLoc, 0, rewardMoney, rewardPoints); //no carriage-based goals for this hand-in
 		
-		return createdGoal;
-		
+		if(r == 0){
+			int startLocID = random(0, 24);
+			GetToDestinationViaStationGoal createdGoal = new GetToDestinationViaStationGoal(goalID, startLocID, destLocID, 0, 0, rewardMoney, rewardPoints);
+		}
+		else{
+			GetToDestinationGoal createdGoal = new GetToDestinationGoal(goalID, destLoc, 0, rewardMoney, rewardPoints); //no carriage-based goals for this hand-in
+			return createdGoal;
+		}
 	}
 	
 	private String getCityName(int junctionID){

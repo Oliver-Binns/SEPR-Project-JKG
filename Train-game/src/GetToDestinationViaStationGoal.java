@@ -25,7 +25,12 @@ public class GetToDestinationViaStationGoal extends Goal {
 	
 	//OTHER METHODS
 	@Override
-	public boolean checkComplete(ArrayList trainsList) {	//CHECKS COMPLETE FOR A PARTICULAR PLAYER BY ITERATING
+	public boolean checkComplete(int turnCount, ArrayList<Train> trainsList) {	//CHECKS COMPLETE FOR A PARTICULAR PLAYER BY ITERATING
+		updateStartedCompleted(turnCount, trainsList);
+		return goalComplete(trainsList);
+	}
+	
+	public boolean goalComplete(ArrayList<Train> trainsList){
 		int carriages = 0;
 		for(int i = 0; i < trainsList.size(); i++){	//RUN THROUGH LIST OF TRAINS AND CHECK IF NO CARRIAGES IS SUFFICIENT...
 			for(int j = 0; j < reachedStation.size(); j++){
@@ -38,8 +43,15 @@ public class GetToDestinationViaStationGoal extends Goal {
 		}
 		return carriages >= this.getNoCarriages();
 	}
-	
-	public void reachedDestinationStation(int turnCount, int trainID, int noCarriages) {	//NEED TO SET A LISTENER FOR WHEN A TRAIN ARRIVES AT THE DESTINATION LOCATION!
+	public void updateStartedCompleted(int turnCount, ArrayList<Train> trainsList){
+		//ITERATE THROUGH TRAINS
+		for(int i = 0; i < trainsList.size(); i++){
+			//ADD PAIR IF TRAIN IS AT START LOCATION...
+			if(trainsList.get(i).getCurrentJunction() == START_LOC_ID){
+				int [] pair = new int[]{turnCount, trainID};
+				this.goalStarted.add(pair);
+			}
+		}
 		//CHECK IF TRAIN HAS BEEN TO START LOCATION...
 		for(int i = 0; i < this.goalStarted.size(); i++){
 			int [] pair = this.goalStarted.get(i);
@@ -51,14 +63,5 @@ public class GetToDestinationViaStationGoal extends Goal {
 				}
 			}
 		}
-			//CHECK IF TIME IS UNDER LIMIT
-				//ADD TRAIN ID & CARRIAGES TO LIST OF COMPLETED TRAINS
-				
 	}
-	public void goalStartedForTrainX(int turnCount, int trainID) {	//NEED TO SET AN EVENT LISTENER FOR WHEN A TRAIN ARRIVES AT THE START LOCATION!
-		int [] pair = new int[]{turnCount, trainID};
-		this.goalStarted.add(pair);
-	}
-	
-	//maybe make a clean-up function that removes any trains from the goalStarted list that have run out of time to complete?
-}
+} 
