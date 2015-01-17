@@ -70,8 +70,8 @@ public class MapGraph extends Game
 
 				s = sc.nextLine();
 
-				while(!s.equals("/")) {
-					junctionLine = sc.nextLine().split(delims);
+				while(!s.startsWith("/")) {
+					junctionLine = s.split(delims);
 					connectionList = new int[junctionLine.length];
 
 					for(int i=0; i<junctionLine.length; i++) {
