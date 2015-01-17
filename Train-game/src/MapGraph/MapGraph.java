@@ -21,11 +21,8 @@ public class MapGraph
 	//Constructor generates 2D MapArray based on given size
 	public MapGraph(int size)
 	{
-		String FilePath = "../dat/map";
-		this.CurrentPlayer = 1;
-		this.PlayerList = new int[] {1,2};
+		String FilePath = "map";
 		this.TurnCounter = 0;
-		this.ActiveGoalList = new ArrayList<Goal>();
 		this.MapArray = new boolean[size][size];
 		this.TrainList = new ArrayList<Integer>();
 		this.JunctionList = this.GetJunctionList(FilePath);
@@ -122,24 +119,6 @@ public class MapGraph
 		return true;
 	}
 
-	//Increments the turn counter
-	protected void IncrementTurn()
-	{
-		this.TurnCounter++;
-	}
-
-	//Adds the Goal to the GoalList
-	protected void AddGoal(Goal goal)
-	{
-		this.ActiveGoalList.add(goal);
-	}
-
-	//Removes the Goal from the GoalList
-	protected void RemoveGoal(Goal goal)
-	{
-		this.ActiveGoalList.remove(goal);
-	}
-
 	//Adds the Train to the specified Junction
 	protected void AddTrain(int TrainID, int Location)
 	{
@@ -152,19 +131,5 @@ public class MapGraph
 	{
 		this.TrainList.remove(Integer.valueOf(TrainID));
 		this.JunctionList[Location].RemoveTrain(TrainID);
-	}
-
-	//Changes CurrentPlayer to indicate a new turn.
-	protected void ChangePlayer()
-	{
-		switch(this.CurrentPlayer)
-		{
-			case 1:
-				this.CurrentPlayer++;
-				break;
-			case 2:
-				this.CurrentPlayer--;
-				break;
-		}
 	}
 }
