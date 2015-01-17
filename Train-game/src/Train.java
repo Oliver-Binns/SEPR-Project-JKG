@@ -27,6 +27,9 @@ public class Train {
 	}
 	
 	//ACCESSORS
+	public int getTrainID(){
+		return TRAIN_ID;
+	}
 	public int getEngineType(){
 		return ENGINE_TYPE;
 	}

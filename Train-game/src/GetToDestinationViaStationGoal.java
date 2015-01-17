@@ -7,8 +7,8 @@ public class GetToDestinationViaStationGoal extends Goal {
 	private ArrayList<int[]> reachedStation;
 	
 	//OBJECT CONSTRUCTOR
-	public GetToDestinationViaStationGoal(int goalID, int startLocID, int destLocID, int turnLimit, int noCarriages) {
-		super(goalID, destLocID, noCarriages);
+	public GetToDestinationViaStationGoal(int goalID, int startLocID, int destLocID, int turnLimit, int noCarriages, int rewardMoney, int rewardPoints) {
+		super(goalID, destLocID, noCarriages, int rewardMoney, int rewardPoints);
 		
 		this.START_LOC_ID = startLocID;
 		this.TURN_LIMIT = turnLimit; //SET TO 0 IF NO LIMIT

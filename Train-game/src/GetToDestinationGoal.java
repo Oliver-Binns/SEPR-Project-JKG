@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class GetToDestinationGoal extends Goal {
 
 	//OBJECT CONSTRUCTOR
-	public GetToDestinationGoal(int goalID, int destLocID, int noCarriages) {
-		super(goalID, destLocID, noCarriages);
+	public GetToDestinationGoal(int goalID, int destLocID, int noCarriages, int rewardMoney, int rewardPoints) {
+		super(goalID, destLocID, noCarriages, int rewardMoney, int rewardPoints);
 		// TODO Auto-generated constructor stub
 	}
 

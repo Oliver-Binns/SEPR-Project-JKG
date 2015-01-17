@@ -7,7 +7,7 @@ public abstract class Goal
 	private final int REWARD_POINTS;
 	
 	//OBJECT CONSTRUCTOR
-	public Goal (int rewardMoney, int rewardPoints, int goalID, int destLocID, int noCarriages) {
+	public Goal (int goalID, int destLocID, int noCarriages, int rewardMoney, int rewardPoints) {
 		REWARD_MONEY = rewardMoney;
 		REWARD_POINTS = rewardPoints;
 		GOAL_ID = goalID;
@@ -25,10 +25,10 @@ public abstract class Goal
 	protected int getDestLocID() {		//subclass needs to know our destination id
 		return DEST_LOC_ID;
 	}
-	public getRewardMoney{
+	public getRewardMoney(){
 		return REWARD_MONEY;
 	}
-	public getRewardPonts{
+	public getRewardPoints(){
 		return REWARD_POINTS;
 	}
 

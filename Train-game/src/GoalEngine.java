@@ -36,35 +36,39 @@ public class GoalEngine {
 		goalDescriptor += "for $" + String.valueOf(currentGoals[i].getRewardMoney()) + " and " + String.valueOf(currentGoals[i].getRewardPoints())  + " exp.";
 	}
 	
-	public endTurn(ArrayList player1Trains, ArrayList player2Trains, int goalToDestroy){
-		player1Points = 0;
-		player1Money = 0;
-		player2Points = 0;
-		player2Money = 0;
+	public endTurn(Player[] players, int goalToDestroy){
+		int[] playerPoints = new Player[players.length];
+		int[] playerMoney = new Player[players.length];
+		for(int i = 0; i < players.length; i++){
+			playerMoney[i] = 0;
+			playerPoints[i]= 0;
+		}
 		
 		for(int i = 0; i < currentGoals.length; i++){
-			Boolean player1 = currentGoals[i].checkComplete(player1Trains); //check complete for player 1
-			Boolean player2 = currentGoals[i].checkCompleye(player2Trains); //check complete for player 2
-			
-			if(player1 && player2){ //if both players complete goal- reward money/points are halved!
-				player1Money += currentGoals[i].getRewardMoney() / 2;
-				player1Points += currentGoals[i].getRewardPoints() / 2;
-				player2Money += currentGoals[i].getRewardMoney() / 2;
-				player2Points += currentGoals[i].getRewardPoints() / 2;
-			}
-			else if(player1){
-				player1Money += currentGoals[i].getRewardMoney();
-				player1Points += currentGoals[i].getRewardPoints();
-			}
-			else if(player2){
-				player2Money += currentGoals[i].getRewardMoney();
-				player2Points += currentGoals[i].getRewardPoints();
+			Boolean[] completeForPlayer = new Boolean[players.length];
+			int numberPlayersCompleted = 0;
+			for(int j = 0; j < players.length; j++){
+				if(currentGoals[i].checkComplete(players[j])){
+					completeForPlayer[j] = true;
+					numberPlayersCompleted++;
+				}
+				else{
+					completeForPlayer[j] = false;
+				}
 			}
 			
-			if(player1 || player2){ //GOAL COMPLETE- Destroy Goal
+			for(int j = 0; j < players.length; j++){
+				if(completeForPlayer[j]){
+					players[j].increasePlayerScore(currentGoals[i].getRewardPoints() / numberPlayersCompleted);
+					players[j].increasePlayerWealth(currentGoals[i].getRewardMoney() / numberPlayersCompleted);
+				}
+			}
+			
+			if(numberPlayersCompleted > 0){ //GOAL COMPLETE- Destroy Goal
 				destroyGoal(i);
 			}
 		}
+		
 	}
 	
 	public void destroyGoal(int goalID){
@@ -75,7 +79,11 @@ public class GoalEngine {
 		GetToDestinationGoal createdGoal;
 		
 		int destLoc = random(0, 24);
-		createdGoal = new GetToDestinationGoal(goalID, destLoc, 0); //no carriage-based goals for this hand-in
+		
+		int rewardMoney = random(1000, 3000);
+		int rewardPoints = random(1000, 3000);
+		
+		createdGoal = new GetToDestinationGoal(goalID, destLoc, 0, rewardMoney, rewardPoints); //no carriage-based goals for this hand-in
 		
 		return createdGoal;
 		
