@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class GetToDestinationGoal extends Goal {
 
 	//OBJECT CONSTRUCTOR
@@ -8,17 +10,11 @@ public class GetToDestinationGoal extends Goal {
 
 	//OTHER METHODS
 	@Override
-	public boolean checkComplete(Train trainX) {
-		return Train.getCurrentJunctionID() == getDestLocID();
+	public boolean checkComplete(ArrayList trainsList) {
+		flag = false;
+		for(int i = 0; i < trainsList.size(); i++){
+			flag = flag || trainsList.get(i).getCurrentJunctionID() == getDestLocID();
+		}
+		return flag;
 	}
-	
-	public boolean reachedDestinationStation(int turnCount, int trainID) {
-		//TODO implement this method!
-		
-		//CHECK IF TRAIN HAS BEEN TO START LOCATION...
-			//CHECK
-		//ELSE
-		return false;
-	}
-
 }
