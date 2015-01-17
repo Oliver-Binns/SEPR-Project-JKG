@@ -88,7 +88,13 @@ public class MapGraph
 
 				JCL = (int[][])jcl.toArray();
 
-				jList.add(new Junction(ID, JCL));
+				if(ID<25) {
+					jList.add(new Station(ID, JCL));
+				} else if(ID>24 && ID<37) {
+					jList.add(new Junction(ID, JCL));
+				} else {
+					jList.add(new Checkpoint(ID, JCL));
+				}
 			}
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
