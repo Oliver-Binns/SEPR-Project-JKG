@@ -18,7 +18,7 @@ public class GoalEngine {
 		return goalDescriptors;
 	}
 	
-	public String getGoalDescriptor(int i){
+	private String getGoalDescriptor(int i){
 		String goalDescriptor = "Goal " + String.valueOf(i) + ": ";
 		
 		goalDescriptor += "Get to " + getCityName(currentGoals[i].getDestLocID()) + " ";
@@ -36,7 +36,7 @@ public class GoalEngine {
 		goalDescriptor += "for $" + String.valueOf(currentGoals[i].getRewardMoney()) + " and " + String.valueOf(currentGoals[i].getRewardPoints())  + " exp.";
 	}
 	
-	public endTurn(ArrayList player1Trains; ArrayList player2Trains; int goalToDestroy){
+	public endTurn(ArrayList player1Trains, ArrayList player2Trains, int goalToDestroy){
 		player1Points = 0;
 		player1Money = 0;
 		player2Points = 0;
