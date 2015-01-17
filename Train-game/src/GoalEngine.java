@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class GoalEngine {
-	private Goal[] currentGoals;
+	private GetToDestinationGoal[] currentGoals;
 	//OBJECT CONSTRUCTOR
 	public GoalEngine(){
-		currentGoals = new Goal[3];
+		currentGoals = new GetToDestinationGoal[3];
 		for(int i = 0; i < currentGoals.length; i++){
 			currentGoals[i] = newGoal();
 		}
@@ -17,6 +17,7 @@ public class GoalEngine {
 		}
 		return goalDescriptors;
 	}
+	
 	public String getGoalDescriptor(int i){
 		String goalDescriptor = "Goal " + String.valueOf(i) + ": ";
 		
@@ -29,7 +30,8 @@ public class GoalEngine {
 			//description for get to destination goal
 		}
 		else{
-			//description for get to destination via station goal!
+			goalDescriptor += " via " + getCityName(currentGoal[i].startLocID());
+			goalDescriptor += " within " + String.valueOf(getTurnLimit());
 		}
 		goalDescriptor += " for $" + String.valueOf(currentGoals[i].getRewardMoney()) + " and " + String.valueOf(currentGoals[i].getRewardPoints())  + " exp.";
 	}
@@ -40,7 +42,7 @@ public class GoalEngine {
 		player2Points = 0;
 		player2Money = 0;
 		
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i < currentGoals.length; i++){
 			Boolean player1 = currentGoals[i].checkComplete(player1Trains); //check complete for player 1
 			Boolean player2 = currentGoals[i].checkCompleye(player2Trains); //check complete for player 2
 			
@@ -69,11 +71,16 @@ public class GoalEngine {
 		currentGoals[goalID] = newGoal(goalID);
 	}
 	
-	private Goal newGoal(int goalID){
-		//TODO implement method
-		//creates new goal
+	private GetToDestinationGoal newGoal(int goalID){
+		GetToDestinationGoal createdGoal;
+		
+		int destLoc = random(0, 24);
+		createdGoal = new GetToDestinationGoal(goalID, destLoc, 0); //no carriage-based goals for this hand-in
+		
+		return createdGoal;
 		
 	}
+	
 	private String getCityName(int junctionID){
 		switch(junctionID){
 			case 0:
@@ -156,5 +163,7 @@ public class GoalEngine {
 				break;
 		}
 	}
-	
+	private int random(int min, int max){
+		randomNum = min + (int)(Math.random()*max);
+	}
 }

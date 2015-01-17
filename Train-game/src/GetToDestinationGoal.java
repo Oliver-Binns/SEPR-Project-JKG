@@ -10,7 +10,7 @@ public class GetToDestinationGoal extends Goal {
 
 	//OTHER METHODS
 	@Override
-	public boolean checkComplete(ArrayList trainsList) {
+	public boolean checkComplete(ArrayList trainsList) { //just checks if train is at location - no carriage based goals for this hand in!
 		flag = false;
 		for(int i = 0; i < trainsList.size(); i++){
 			flag = flag || trainsList.get(i).getCurrentJunctionID() == getDestLocID();
