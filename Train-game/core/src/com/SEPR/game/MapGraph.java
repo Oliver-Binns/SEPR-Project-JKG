@@ -5,11 +5,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import com.badlogic.gdx.Game;
+
 /*
 MapGraph is the main class, it represents the map structure and is what the game engine will be interacting with
 */
 
-public class MapGraph
+public class MapGraph extends Game
 {
 	int CurrentPlayer;	//The current player number, used to represent who's turn it is
 	int[] PlayerList;	//The list of players that are playing
@@ -21,7 +23,7 @@ public class MapGraph
 	//Constructor generates 2D MapArray based on given size
 	public MapGraph(int size)
 	{
-		String FilePath = "C:/Users/Mark/Documents/0 - My stuff/University/Year 2/SEPR/SEPR-Project-JKG-MapGraphDesign/SEPR-Project-JKG-MapGraphDesign/Train-game/src/MapGraph/map.txt";
+		String FilePath = "map.txt";
 		this.TurnCounter = 0;
 		this.MapArray = new boolean[size][size];
 		this.TrainList = new ArrayList<Integer>();
@@ -81,7 +83,7 @@ public class MapGraph
 					s = sc.nextLine();
 				}
 
-				JCL = (int[][])jcl.toArray();
+				JCL = (int[][])jcl.toArray(new int[0][]);
 
 				if(ID<25) {
 					jList.add(new Station(ID, JCL));
@@ -131,5 +133,11 @@ public class MapGraph
 	{
 		this.TrainList.remove(Integer.valueOf(TrainID));
 		this.JunctionList[Location].RemoveTrain(TrainID);
+	}
+
+	@Override
+	public void create() {
+		// TODO Auto-generated method stub
+		
 	}
 }

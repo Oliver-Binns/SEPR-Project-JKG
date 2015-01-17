@@ -237,7 +237,7 @@ public class MapGUI extends Game
 					{
 						stationButton[c].setChecked(false);
 					}
-					System.out.println(String.valueOf(b));
+					System.out.println(b);
 					selectedJunction = b;
 					stationButton[b].setChecked(true);
 				}

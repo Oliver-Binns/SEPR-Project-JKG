@@ -5,7 +5,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.SEPR.game.GameEngine;
 
 public class DesktopLauncher {
-	public static void main (String[] arg) {
+	public static void main (String[] arg) throws InterruptedException {
+		System.out.println(System.getProperty("user.dir"));
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.height = GameEngine.HEIGHT;
 		config.width = GameEngine.WIDTH;
