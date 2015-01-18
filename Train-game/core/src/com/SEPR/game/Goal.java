@@ -2,8 +2,7 @@ package com.SEPR.game;
 
 import java.util.ArrayList;
 
-public abstract class Goal
-{
+public abstract class Goal {
 	private final int GOAL_ID;		//read only - once a goal has been instantiated, it can not be changed!
 	private final int DEST_LOC_ID;	//read only - once a goal has been instantiated, it can not be changed!
 	private final int NO_CARRIAGES;	//read only - once a goal has been instantiated, it can not be changed!
@@ -29,10 +28,10 @@ public abstract class Goal
 	protected int getDestLocID() {		//subclass needs to know our destination id
 		return DEST_LOC_ID;
 	}
-	public int getRewardMoney(){
+	public int getRewardMoney() {
 		return REWARD_MONEY;
 	}
-	public int getRewardPoints(){
+	public int getRewardPoints() {
 		return REWARD_POINTS;
 	}
 

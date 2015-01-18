@@ -11,50 +11,41 @@ import com.badlogic.gdx.Game;
 MapGraph is the main class, it represents the map structure and is what the game engine will be interacting with
 */
 
-public class MapGraph extends Game
-{
-	int CurrentPlayer;	//The current player number, used to represent who's turn it is
-	int[] PlayerList;	//The list of players that are playing
-	int TurnCounter;	//The number of turns that have passed since the beginning of the game
-	boolean[][] MapArray;	//A 2D array representing all of the connections between each junction
-	ArrayList<Integer> TrainList;	//An arraylist of trains that are currently active on the map
-	Junction[] JunctionList;	//A list of junctions contained in the map (includes stations and checkpoints)
+public class MapGraph extends Game {
+	boolean[][] mapArray;	//A 2D array representing all of the connections between each junction
+	ArrayList<Integer> trainList;	//An arraylist of trains that are currently active on the map
+	Junction[] junctionList;	//A list of junctions contained in the map (includes stations and checkpoints)
 
-	//Constructor generates 2D MapArray based on given size
-	public MapGraph(int size)
-	{
-		String FilePath = "map.txt";
-		this.TurnCounter = 0;
-		this.MapArray = new boolean[size][size];
-		this.TrainList = new ArrayList<Integer>();
-		this.JunctionList = this.GetJunctionList(FilePath);
+	//Constructor generates 2D mapArray based on given size
+	public MapGraph(int size) {
+		String filePath = "map.txt";
+		this.mapArray = new boolean[size][size];
+		this.trainList = new ArrayList<Integer>();
+		this.junctionList = this.GetJunctionList(filePath);
 		this.CreateMapArray();
 	}
 
-	//Takes the JunctionList and generates a 2D MapArray from their respective JunctionConnectedList
-	protected void CreateMapArray()
-	{
-		for(Junction j : this.JunctionList)
-		{
+	//Takes the junctionList and generates a 2D mapArray from their respective JunctionConnectedList
+	protected void CreateMapArray() {
+		for(Junction j : this.junctionList) {
 			int index = j.GetID();
-			this.MapArray[index][index] = true;
-			for(int connection : j.GetConnectedJunctions())
-			{
+			this.mapArray[index][index] = true;
+			for(int connection : j.GetConnectedJunctions()) {
 				int next = j.FindNext(connection);
 
-				this.MapArray[index][next] = true;
-				this.MapArray[next][index] = true;
+				this.mapArray[index][next] = true;
+				this.mapArray[next][index] = true;
 			}
 		}
 	}
 
 	//Initializes all of the junction objects and links them together for the map.
-	private Junction[] GetJunctionList(String File) {
+	private Junction[] GetJunctionList(String file) {
 		int ID;
 		int[] connectionList;
 		int[][] JCL;
 		ArrayList<int[]> jcl = new ArrayList<int[]>();
-		File map = new File(File);
+		File map = new File(file);
 		ArrayList<Junction> jList = new ArrayList<Junction>();
 
 		//This try block reads junction information from a file (/dat/map) and instantiates each junction, it returns a list of junctions that it contains
@@ -102,18 +93,16 @@ public class MapGraph extends Game
 	}
 
 	//Moves the Train from a specified location to a specified destination
-	protected boolean MoveTrain(int TrainID, int Location, int Destination)
-	{
-		Junction JunctLocation = JunctionList[Location];
+	protected boolean MoveTrain(int trainID, int location, int destination) {
+		Junction junctLocation = junctionList[location];
 
-		if(JunctLocation.IsPresent(Integer.valueOf(TrainID)))
-		{
-			int NewLoc = JunctLocation.FindNext(Destination);
-			if(NewLoc == -1) {
+		if(JunctLocation.IsPresent(Integer.valueOf(trainID))) {
+			int newLoc = JunctLocation.FindNext(destination);
+			if(newLoc == -1) {
 				return false;
 			}
-			JunctLocation.RemoveTrain(Integer.valueOf(TrainID));
-			JunctionList[NewLoc].AddTrain(Integer.valueOf(TrainID));
+			JunctLocation.RemoveTrain(Integer.valueOf(trainID));
+			junctionList[newLoc].AddTrain(Integer.valueOf(trainID));
 		} else {
 			return false;
 		}
@@ -122,17 +111,15 @@ public class MapGraph extends Game
 	}
 
 	//Adds the Train to the specified Junction
-	protected void AddTrain(int TrainID, int Location)
-	{
-		this.TrainList.add(Integer.valueOf(TrainID));
-		this.JunctionList[Location].AddTrain(TrainID);
+	protected void AddTrain(int trainID, int location) {
+		this.trainList.add(Integer.valueOf(trainID));
+		this.junctionList[location].AddTrain(trainID);
 	}
 
 	//Removes the Train from the specified Junction
-	protected void RemoveTrain(int TrainID, int Location)
-	{
-		this.TrainList.remove(Integer.valueOf(TrainID));
-		this.JunctionList[Location].RemoveTrain(TrainID);
+	protected void RemoveTrain(int trainID, int location) {
+		this.trainList.remove(Integer.valueOf(trainID));
+		this.junctionList[location].RemoveTrain(trainID);
 	}
 
 	@Override

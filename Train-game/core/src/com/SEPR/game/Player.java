@@ -15,7 +15,7 @@ public class Player {
 	private int wealth;
 	
 	//CONSTRUCTOR - SET ALL PARAMETERS FOR OBJECT
-	public Player(int playerID, int homeStationID){
+	public Player(int playerID, int homeStationID) {
 		PLAYER_ID = playerID;
 		HOME_STATION_ID = homeStationID;
 		//player has no trains when initialised!
@@ -25,32 +25,31 @@ public class Player {
 		wealth = 0;
 	}
 	
-	public ArrayList<Train> getPlayerTrains(){
+	public ArrayList<Train> getPlayerTrains() {
 		return playerTrains;
 	}
 	
-	public void buyNewTrain(int cost, int engineType, int ownerID, int trainID, int faultRate){
-		if(playerTrains.size() < 100){
+	public void buyNewTrain(int cost, int engineType, int ownerID, int trainID, int faultRate) {
+		if(playerTrains.size() < 100) {
 			Train newTrain = new Train(engineType, PLAYER_ID, trainID, HOME_STATION_ID, faultRate);
 			playerTrains.add(newTrain);
 			wealth -= cost;
-		}
-		else{
+		} else {
 			JOptionPane.showMessageDialog(null, "You can only have 100 trains!", "InfoBox: " + "Sorry!", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
-	public int getPlayerScore(){
+	public int getPlayerScore() {
 		return score;
 	}
-	public void increasePlayerScore(int numPoints){
+	public void increasePlayerScore(int numPoints) {
 		score += numPoints;
 	}
 	
-	public int getPlayerWealth(){
+	public int getPlayerWealth() {
 		return wealth;
 	}
-	public void increasePlayerWealth(int numWealth){
+	public void increasePlayerWealth(int numWealth) {
 		wealth += numWealth;
 	}
 	

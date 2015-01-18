@@ -14,8 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class PlayerShop extends Game
-{
+public class PlayerShop extends Game {
 	public final int cellWidth = 50, cellHeight = 30;
 	
 	BitmapFont font;
@@ -48,8 +47,7 @@ public class PlayerShop extends Game
 	boolean showShop = false;
 	
 	@Override
-	public void create()
-	{
+	public void create() {
 		batch = new SpriteBatch();
 		shopBackground = new Texture("images/shopBackground.png");
 		sprite = new Sprite(shopBackground);
@@ -102,103 +100,80 @@ public class PlayerShop extends Game
 		//shopStage.setViewport(GameEngine.viewport);
 		shopStage.addActor(shopTable);
 		
-		showShopButton.addListener(new ChangeListener()
-		{
+		showShopButton.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
+			public void changed(ChangeEvent event, Actor actor) {
 				showShop = !showShop;
-				if (showShop)
-				{
+				if (showShop) {
 					Gdx.input.setInputProcessor(shopStage);
 					shopStage.addActor(showShopButton);
-				}
-				else
-				{
+				} else {
 					Gdx.input.setInputProcessor(GameEngine.mainStage);
 					GameEngine.mainStage.addActor(showShopButton);
 				}
 			}
 		});
 		
-		electricT1.addListener(new ChangeListener()
-		{
+		electricT1.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
+			public void changed(ChangeEvent event, Actor actor) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		electricT2.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 			}	
 		});
 		
-		electricT2.addListener(new ChangeListener()
-		{
+		electricT3.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
+			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 			}	
 		});
 		
-		electricT3.addListener(new ChangeListener()
-		{
+		dieselT1.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
-				// TODO Auto-generated method stub
-			}	
-		});
-		
-		dieselT1.addListener(new ChangeListener()
-		{
-			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
+			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 			}
 		});
 		
-		dieselT2.addListener(new ChangeListener()
-		{
+		dieselT2.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
+			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 			}
 		});
 		
-		dieselT3.addListener(new ChangeListener()
-		{
+		dieselT3.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
+			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 			}
 		});
 		
-		flyingT1.addListener(new ChangeListener()
-		{
+		flyingT1.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
+			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 			}
 		});
 		
-		flyingT2.addListener(new ChangeListener()
-		{
+		flyingT2.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
+			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 			}
 		});
 	}
 	
 	@Override
-	public void render()
-	{		
-		if (showShop)
-		{
+	public void render() {		
+		if (showShop) {
 			batch.enableBlending();
 			batch.begin();
 			sprite.draw(batch);

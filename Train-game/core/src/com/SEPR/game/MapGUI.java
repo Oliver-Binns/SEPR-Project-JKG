@@ -14,8 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-public class MapGUI extends Game
-{
+public class MapGUI extends Game {
 	GameEngine gameEngine;
 	
 	int i;
@@ -55,13 +54,11 @@ public class MapGUI extends Game
 	Table trainListTable;
 	ArrayList<Train> trainList;
 	
-	public MapGUI(GameEngine engine)
-	{
+	public MapGUI(GameEngine engine) {
 		gameEngine = engine;
 	}
 	
-	public void create()
-	{	
+	public void create() {	
 		stationCount = 98;
 		
 		moveTrainButton = new TextButton("Move", GameEngine.textButtonStyle);
@@ -218,29 +215,23 @@ public class MapGUI extends Game
 		stationCoordinates[94] = new Coordinates(1453 * ((float)GameEngine.WIDTH/1680), (1050 - 492) * ((float)GameEngine.HEIGHT/1050));
 		
 		stationButton = new ImageButton[stationCount];
-		for(i = 0; i < 25; i++)
-		{
+		for(i = 0; i < 25; i++) 	{
 			stationButton[i] = new ImageButton(stationButtonStyle);
 			GameEngine.mainStage.addActor(stationButton[i]);
 			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
 		}
 		
-		for(i = 25; i < stationCount; i++)
-		{
+		for(i = 25; i < stationCount; i++) {
 			stationButton[i] = new ImageButton(junctionButtonStyle);
 			GameEngine.mainStage.addActor(stationButton[i]);
 			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
 		}
 		
-		for(i = 0; i < stationCount; i++)
-		{
-			stationButton[i].addListener(new ClickListener()
-			{
+		for(i = 0; i < stationCount; i++) {
+			stationButton[i].addListener(new ClickListener() {
 				final int b = i;
-				public void clicked(InputEvent event, float x, float y)
-				{	
-					for(int c = 0; c < stationCount; c++)
-					{
+				public void clicked(InputEvent event, float x, float y) {	
+					for(int c = 0; c < stationCount; c++) {
 						stationButton[c].setChecked(false);
 					}
 					selectedJunction = b;
@@ -249,25 +240,20 @@ public class MapGUI extends Game
 			});
 		}
 		
-		moveTrainButton.addListener(new ClickListener()
-		{
-			public void clicked(InputEvent event, float x, float y)
-			{
+		moveTrainButton.addListener(new ClickListener() {
+			public void clicked(InputEvent event, float x, float y) {
 				moveTrain();
 			}
 		});
 		
-		nextTurn.addListener(new ClickListener()
-		{
-			public void clicked(InputEvent event, float x, float y)
-			{
+		nextTurn.addListener(new ClickListener() {
+			public void clicked(InputEvent event, float x, float y) {
 				gameEngine.nextTurn();
 			}
 		});
 	}
 	
-	public void updateTrainList(Player player)
-	{
+	public void updateTrainList(Player player) {
 		//This will get the list of trains owned by a player to display them on screen as buttons so that they can be moved
 		trainList = new ArrayList<Train>(player.getPlayerTrains());
 		trainListTable.clear();
@@ -275,10 +261,8 @@ public class MapGUI extends Game
 		TextButton train = null;
 		TextButton trainText = null;
 		
-		for(int i = 0; i < trainList.size(); i++)
-		{
-			switch(trainList.get(i).getEngineType())
-			{
+		for(int i = 0; i < trainList.size(); i++) {
+			switch(trainList.get(i).getEngineType()) {
 			case 1:
 				train = new TextButton(String.valueOf(trainList.get(i).getTier()), electricTrainButtonStyle);
 				trainText = new TextButton("Electric - Tier " + trainList.get(i).getTier(), GameEngine.textButtonStyle);
@@ -304,15 +288,11 @@ public class MapGUI extends Game
 		trainListTable.setPosition(55, 40);
 		GameEngine.mainStage.addActor(trainListTable);
 		
-		for(i = 0; i < trainList.size(); i++)
-		{
-			trainButtonList.get(i).addListener(new ClickListener()
-			{
+		for(i = 0; i < trainList.size(); i++) {
+			trainButtonList.get(i).addListener(new ClickListener() {
 				final int b = i;
-				public void clicked(InputEvent event, float x, float y)
-				{	
-					for(int c = 0; c < trainList.size(); c++)
-					{
+				public void clicked(InputEvent event, float x, float y) {	
+					for(int c = 0; c < trainList.size(); c++) {
 						trainButton.get(c).setChecked(false);
 					}
 					trainButton.get(b).setChecked(true);
@@ -322,32 +302,26 @@ public class MapGUI extends Game
 		}
 	}
 	
-	protected void moveTrain()
-	{
+	protected void moveTrain() {
 		boolean flag = true;
-		if(trainMoved.get(selectedTrain) == false)
-		{
-			for(int i = 0; i < trainList.get(i).getSpeed(); i++)
-			{
+		if(trainMoved.get(selectedTrain) == false) {
+			for(int i = 0; i < trainList.get(i).getSpeed(); i++) {
 				System.out.println(trainList.get(selectedTrain).getTrainID());
 				System.out.println(trainLocation.get(selectedTrain));
 				System.out.println(selectedJunction);
 				flag = mapGraph.MoveTrain(trainList.get(selectedTrain).getTrainID(), trainLocation.get(selectedTrain), selectedJunction);
-				if(selectedJunction < 37)
-				{
+				if(selectedJunction < 37) {
 					break;
 				}
 			}
-			if(flag == true)
-			{
+			if(flag == true) {
 				trainMoved.set(selectedTrain, false);
 			}
 		}
 	}
 	
 	@Override
-	public void render()
-	{
+	public void render() {
 		
 	}
 }

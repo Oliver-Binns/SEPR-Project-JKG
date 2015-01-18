@@ -3,15 +3,14 @@ package com.SEPR.game;
 public class GoalEngine {
 	private GetToDestinationGoal[] currentGoals;
 	//OBJECT CONSTRUCTOR
-	public GoalEngine(){
+	public GoalEngine() {
 		currentGoals = new GetToDestinationGoal[3];
-		for(int i = 0; i < currentGoals.length; i++)
-		{
+		for(int i = 0; i < currentGoals.length; i++) {
 			currentGoals[i] = newGoal(i);
 		}
 	}
 	
-	public String[] getGoalDescriptors(){
+	public String[] getGoalDescriptors() {
 		String[] goalDescriptors = new String[currentGoals.length];
 		for(int i = 0; i < currentGoals.length; i++){
 			goalDescriptors[i] = getGoalDescriptor(i);
@@ -19,11 +18,11 @@ public class GoalEngine {
 		return goalDescriptors;
 	}
 	
-	private String getGoalDescriptor(int i){
+	private String getGoalDescriptor(int i) {
 		String goalDescriptor = "Goal " + String.valueOf(i) + ": ";
 		
 		goalDescriptor += "Get to " + getCityName(currentGoals[i].getDestLocID()) + " ";
-		if(currentGoals[i].getNumCarriages() > 1){
+		if(currentGoals[i].getNumCarriages() > 1) {
 			goalDescriptor += "with at least " + String.valueOf(currentGoals[i].getNumCarriages()) + " carriages ";
 		}
 		
@@ -31,19 +30,19 @@ public class GoalEngine {
 		return goalDescriptor;
 	}
 	
-	public void endTurn(Player[] players, int goalToDestroy){
+	public void endTurn(Player[] players, int goalToDestroy) {
 		int[] playerPoints = new int[players.length];
 		int[] playerMoney = new int[players.length];
-		for(int i = 0; i < players.length; i++){
+		for(int i = 0; i < players.length; i++) {
 			playerMoney[i] = 0;
 			playerPoints[i]= 0;
 		}
 		
-		for(int i = 0; i < currentGoals.length; i++){
+		for(int i = 0; i < currentGoals.length; i++) {
 			Boolean[] completeForPlayer = new Boolean[players.length];
 			int numberPlayersCompleted = 0;
-			for(int j = 0; j < players.length; j++){
-				if(currentGoals[i].CheckComplete(players[j].getPlayerTrains())){
+			for(int j = 0; j < players.length; j++) {
+				if(currentGoals[i].CheckComplete(players[j].getPlayerTrains())) {
 					completeForPlayer[j] = true;
 					numberPlayersCompleted++;
 				}
@@ -52,25 +51,25 @@ public class GoalEngine {
 				}
 			}
 			
-			for(int j = 0; j < players.length; j++){
-				if(completeForPlayer[j]){
+			for(int j = 0; j < players.length; j++) {
+				if(completeForPlayer[j]) {
 					players[j].increasePlayerScore(currentGoals[i].getRewardPoints() / numberPlayersCompleted);
 					players[j].increasePlayerWealth(currentGoals[i].getRewardMoney() / numberPlayersCompleted);
 				}
 			}
 			
-			if(numberPlayersCompleted > 0){ //GOAL COMPLETE- Destroy Goal
+			if(numberPlayersCompleted > 0) { //GOAL COMPLETE- Destroy Goal
 				destroyGoal(i);
 			}
 		}
 		
 	}
 	
-	public void destroyGoal(int goalID){
+	public void destroyGoal(int goalID) {
 		currentGoals[goalID] = newGoal(goalID);
 	}
 	
-	private GetToDestinationGoal newGoal(int goalID){
+	private GetToDestinationGoal newGoal(int goalID) {
 		GetToDestinationGoal createdGoal;
 		
 		int destLoc = random(0, 24);
@@ -84,7 +83,7 @@ public class GoalEngine {
 		
 	}
 	
-	private String getCityName(int junctionID){
+	private String getCityName(int junctionID) {
 		switch(junctionID){
 			case 0:
 				return "Lisbon";
@@ -140,7 +139,7 @@ public class GoalEngine {
 				throw new IllegalArgumentException("Error- cannot get city name for junction id greater than 24.");
 		}
 	}
-	private int random(int min, int max){
+	private int random(int min, int max) {
 		return min + (int)(Math.random()*max);
 	}
 }

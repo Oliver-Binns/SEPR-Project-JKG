@@ -18,7 +18,7 @@ public class Train {
 	private int tier;
 	
 	//CONSTRUCTOR - SET ALL PARAMETERS FOR OBJECT
-	public Train(int engineType, int ownerID, int trainID, int ownerHomeStation, int faultRate){
+	public Train(int engineType, int ownerID, int trainID, int ownerHomeStation, int faultRate) {
 		ENGINE_TYPE = engineType;
 		OWNER_ID = ownerID;
 		TRAIN_ID = trainID;
@@ -31,56 +31,54 @@ public class Train {
 	}
 	
 	//ACCESSORS
-	public int getTrainID(){
+	public int getTrainID() {
 		return TRAIN_ID;
 	}
-	public int getEngineType(){
+	public int getEngineType() {
 		return ENGINE_TYPE;
 	}
-	public int getOwnerID(){
+	public int getOwnerID() {
 		return OWNER_ID;
 	}
 	//accessor for current junction
-	public int getCurrentJunction(){
+	public int getCurrentJunction() {
 		return currentJunction;
 	}
-	public int getFaultRate(){
+	public int getFaultRate() {
 		return faultRate;
 	}
-	public boolean isFaulty(){
+	public boolean isFaulty() {
 		return faulty;
 	}
-	public int getNumCarriages(){
+	public int getNumCarriages() {
 		return numCarriages;
 	}
-	public int getTier(){
+	public int getTier() {
 		return tier;
 	}
-	public int getSpeed(){
-		if(ENGINE_TYPE == 1){
+	public int getSpeed() {
+		if(ENGINE_TYPE == 1) {
 			return (tier + 1);
-		}
-		else{
+		} else {
 			return 2;
 		}
 	}
 	
 	//move train from one junction to another.
-	public void moveTrain(int destinationID){
+	public void moveTrain(int destinationID) {
 		currentJunction = destinationID;
 	}
-	public void upgradeTrain(){
+	public void upgradeTrain() {
 		if(tier <= 3){ //tier can't be higher than 3!
 			tier++;
-		}
-		else{
+		} else {
 			JOptionPane.showMessageDialog(null, "Trains have a maximum tier of 3!", "InfoBox: " + "Sorry!", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
-	public void breakTrain(){
+	public void breakTrain() {
 		faulty = true;
 	}
-	public void repairTrain(){
+	public void repairTrain() {
 		faulty = false;
 	}
 	

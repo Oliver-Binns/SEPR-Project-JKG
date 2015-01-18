@@ -97,8 +97,7 @@ public class GameEngine extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render ()
-	{
+	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -111,8 +110,7 @@ public class GameEngine extends ApplicationAdapter {
 		mainStage.draw();
 	}
 	
-	public void nextTurn()
-	{
+	public void nextTurn() {
 		turnCount++;
 		currentPlayerInt = 1 - currentPlayerInt;
 		currentPlayer = player[currentPlayerInt];
@@ -123,8 +121,7 @@ public class GameEngine extends ApplicationAdapter {
 		}
 	}
 	
-	public void incrementTurn()
-	{
+	public void incrementTurn() {
 		mapGUI.updateTrainList(currentPlayer);
 		goalEngine.endTurn(player, ((int)Math.random()*3));
 	}
