@@ -136,14 +136,15 @@ public class GameEngine extends ApplicationAdapter {
 		currentPlayer = player[currentPlayerInt];
 		mapGUI.updateTrainList(currentPlayer);
 		
-		playerInfo.playerInfoTable.clear();
-		playerInfo.playerInfoTable.add(new Label("Player " + (currentPlayerInt + 1), GameEngine.labelStyle)).size(50, 15).row();
-		playerInfo.playerInfoTable.add(new Label("Wealth: " + currentPlayer.getPlayerWealth(), labelStyle)).size(50, 15).row();
-		playerInfo.playerInfoTable.add(new Label("Score: " + currentPlayer.getPlayerScore(), labelStyle)).size(50, 15);
 		if(currentPlayerInt == 0)
 		{
 			incrementTurn();
 		}
+		playerInfo.playerInfoTable.clear();
+		playerInfo.playerInfoTable.add(new Label("Player " + (currentPlayerInt + 1), GameEngine.labelStyle)).size(50, 15).row();
+		playerInfo.playerInfoTable.add(new Label("Wealth: " + currentPlayer.getPlayerWealth(), labelStyle)).size(50, 15).row();
+		playerInfo.playerInfoTable.add(new Label("Score: " + currentPlayer.getPlayerScore(), labelStyle)).size(50, 15);
+		System.out.println(currentPlayer.getPlayerScore());
 	}
 	
 	public void incrementTurn() {
@@ -156,6 +157,6 @@ public class GameEngine extends ApplicationAdapter {
 		for(int i = 0; i < goalEngine.getGoalDescriptors().length; i++){
 			playerInfo.goalTable.add(new Label(goalDescriptors[i], GameEngine.labelStyle)).size(150, 15).row();
 		}
-		playerInfo.goalTable.setPosition(85, 700);
+		playerInfo.goalTable.setPosition(85, 700);	
 	}
 }
