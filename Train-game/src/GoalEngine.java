@@ -29,7 +29,9 @@ public class GoalEngine {
 		
 		if(currentGoals[i] instanceof GetToDestinationViaStationGoal){
 			goalDescriptor += "via " + getCityName(currentGoals.get(i).startLocID());
-			goalDescriptor += "within " + String.valueOf(getTurnLimit()) + " turns ";
+			if(currentGoals.get(i).getTurnLimit() > 0){
+				goalDescriptor += "within " + String.valueOf(currentGoals.get(i).getTurnLimit()) + " turns ";
+			}
 		}
 		goalDescriptor += "for $" + String.valueOf(currentGoals.get(i).getRewardMoney()) + " and " + String.valueOf(currentGoals.get(i).getRewardPoints())  + " exp.";
 	}

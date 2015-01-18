@@ -33,5 +33,5 @@ public abstract class Goal
 	}
 
 	//OTHER METHODS
-	public abstract boolean CheckComplete();
+	public abstract boolean checkComplete();
 }

@@ -43,6 +43,7 @@ public class GetToDestinationViaStationGoal extends Goal {
 		}
 		return carriages >= this.getNoCarriages();
 	}
+	
 	public void updateStartedCompleted(int turnCount, ArrayList<Train> trainsList){
 		//ITERATE THROUGH TRAINS
 		for(int i = 0; i < trainsList.size(); i++){
@@ -57,9 +58,9 @@ public class GetToDestinationViaStationGoal extends Goal {
 			int [] pair = this.goalStarted.get(i);
 			if(trainID == pair[1]){
 				this.goalStarted.remove(i); //remove item so this train can't leave and come back again without returning to the start location!
-				if(this.getTurnLimit() >= (turnCount - pair[0])){
+				if(this.getTurnLimit() >= (turnCount - pair[0]) || this.getTurnLimit() == 0){
 					int [] newPair = new int[]{trainID, noCarriages};
-					this.reachedStation.add(newPair);
+					this.reachedStation.add(newPair); //ADD PAIR IF TRAIN WAS AT START LOCATION AND IS NOW AT FINAL LOCATION
 				}
 			}
 		}
