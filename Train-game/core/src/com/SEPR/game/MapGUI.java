@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class MapGUI extends Game
 {
+	GameEngine gameEngine;
+	
 	int i;
 	int selectedTrain;
 	int selectedJunction;
@@ -53,9 +55,13 @@ public class MapGUI extends Game
 	Table trainListTable;
 	ArrayList<Train> trainList;
 	
-	@Override
-	public void create()
+	public MapGUI(GameEngine engine)
 	{
+		gameEngine = engine;
+	}
+	
+	public void create()
+	{	
 		stationCount = 98;
 		
 		moveTrainButton = new TextButton("Move", GameEngine.textButtonStyle);
@@ -237,7 +243,6 @@ public class MapGUI extends Game
 					{
 						stationButton[c].setChecked(false);
 					}
-					System.out.println(b);
 					selectedJunction = b;
 					stationButton[b].setChecked(true);
 				}
@@ -256,7 +261,7 @@ public class MapGUI extends Game
 		{
 			public void clicked(InputEvent event, float x, float y)
 			{
-				
+				gameEngine.nextTurn();
 			}
 		});
 	}
@@ -267,35 +272,36 @@ public class MapGUI extends Game
 		trainList = new ArrayList<Train>(player.getPlayerTrains());
 		trainListTable.clear();
 		
+		TextButton train = null;
+		TextButton trainText = null;
+		
 		for(int i = 0; i < trainList.size(); i++)
 		{
-			TextButton train;
-			TextButton trainText;
 			switch(trainList.get(i).getEngineType())
 			{
 			case 1:
 				train = new TextButton(String.valueOf(trainList.get(i).getTier()), electricTrainButtonStyle);
-				trainButton.add(train);
 				trainText = new TextButton("Electric - Tier " + trainList.get(i).getTier(), GameEngine.textButtonStyle);
-				trainButtonList.add(trainText);
+				break;
 			case 2:
 				train = new TextButton(String.valueOf(trainList.get(i).getTier()), dieselTrainButtonStyle);
-				trainButton.add(train);
 				trainText = new TextButton("Diesel - Tier " + trainList.get(i).getTier(), GameEngine.textButtonStyle);
-				trainButtonList.add(trainText);
+				break;
 			case 3:
 				train = new TextButton(String.valueOf(trainList.get(i).getTier()), flyingTrainButtonStyle);
-				trainButton.add(train);
 				trainText = new TextButton("Flying - Tier " + trainList.get(i).getTier(), GameEngine.textButtonStyle);
-				trainButtonList.add(trainText);
+				break;
 			}
+			trainButton.add(train);
+			trainButtonList.add(trainText);
 			trainLocation.add(trainList.get(i).getCurrentJunction());
-			trainButtonList.get(i).setPosition(stationCoordinates[trainLocation.get(i)].x, stationCoordinates[trainLocation.get(i)].y);
-			GameEngine.mainStage.addActor(trainButtonList.get(i));
+			trainButton.get(i).setPosition(stationCoordinates[trainLocation.get(i)].x, stationCoordinates[trainLocation.get(i)].y);
+			GameEngine.mainStage.addActor(trainButton.get(i));
 			trainListTable.add(trainButtonList.get(i)).row();
 			trainMoved.add(false);
 		}
 		
+		trainListTable.setPosition(55, 40);
 		GameEngine.mainStage.addActor(trainListTable);
 		
 		for(i = 0; i < trainList.size(); i++)
@@ -323,6 +329,9 @@ public class MapGUI extends Game
 		{
 			for(int i = 0; i < trainList.get(i).getSpeed(); i++)
 			{
+				System.out.println(trainList.get(selectedTrain).getTrainID());
+				System.out.println(trainLocation.get(selectedTrain));
+				System.out.println(selectedJunction);
 				flag = mapGraph.MoveTrain(trainList.get(selectedTrain).getTrainID(), trainLocation.get(selectedTrain), selectedJunction);
 				if(selectedJunction < 37)
 				{

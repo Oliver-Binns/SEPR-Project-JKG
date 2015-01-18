@@ -1,5 +1,7 @@
 package com.SEPR.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -35,6 +37,7 @@ public class GameEngine extends ApplicationAdapter {
 	
 	Player[] player;
 	Player currentPlayer;
+	ArrayList<Train> playerTrain;
 	
 	MapGraph mapGraph;
 	GoalEngine goalEngine;
@@ -62,6 +65,12 @@ public class GameEngine extends ApplicationAdapter {
 		player[0].buyNewTrain(0, 1, 0, 0, 0);
 		player[1].buyNewTrain(0, 1, 1, 1, 0);
 		
+		playerTrain = new ArrayList<Train>();
+		playerTrain = player[0].getPlayerTrains();
+		playerTrain.get(0).moveTrain(0);
+		playerTrain = player[1].getPlayerTrains();
+		playerTrain.get(0).moveTrain(1);
+		
 		currentPlayer = player[0];
 		
 		goalEngine = new GoalEngine();
@@ -70,7 +79,7 @@ public class GameEngine extends ApplicationAdapter {
 		mainStage = new Stage();
 		//mainStage.setViewport(viewport);
 		
-		mapGUI = new MapGUI();
+		mapGUI = new MapGUI(this);
 		mapGUI.create();
 		
 		mapGraph = new MapGraph(mapGUI.stationCount);
@@ -81,6 +90,8 @@ public class GameEngine extends ApplicationAdapter {
 		playerShop = new PlayerShop();
 		playerShop.create();
 		mainStage.addActor(playerShop.showShopButton);
+		
+		mapGUI.updateTrainList(currentPlayer);
 		
 		Gdx.input.setInputProcessor(mainStage);
 	}
