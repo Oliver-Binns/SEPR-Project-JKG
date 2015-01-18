@@ -13,5 +13,18 @@ About
 Features
 =
    <ul>
-   <li>_Dynamic_ global goals will keep you racing against your opponent to be the first to the destination.</li>
+   <li>Dynamic global goals will keep you racing against your opponent to be the first to the destination.</li>
+   <li>Players will be able to spend their wealth on upgrades for their trains and items to
+   either help or hinder.</li>
+   <li>Has completed the requirements of the assessment brief.</li>
    </ul>
+
+System Requirements
+=
+   The game will run on almost all desktop platforms.
+
+Framework Features
+=
+   The current source code allows for easy extensions and extra functionality to be added to the game.
+   Due to the Object Oriented nature of Java, new train types, extra players, and goals can be added to the game
+   with litte difficulty.
