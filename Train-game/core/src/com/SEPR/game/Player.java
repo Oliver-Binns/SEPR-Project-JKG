@@ -31,9 +31,14 @@ public class Player {
 	
 	public void buyNewTrain(int cost, int engineType, int ownerID, int trainID, int faultRate) {
 		if(playerTrains.size() < 100) {
-			Train newTrain = new Train(engineType, PLAYER_ID, trainID, HOME_STATION_ID, faultRate);
-			playerTrains.add(newTrain);
-			wealth -= cost;
+			if(wealth >= cost){
+				Train newTrain = new Train(engineType, PLAYER_ID, trainID, HOME_STATION_ID, faultRate);
+				playerTrains.add(newTrain);
+				wealth -= cost;
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "You don't have enough money to buy this train!", "Oops!", JOptionPane.INFORMATION_MESSAGE);
+			}
 		} else {
 			JOptionPane.showMessageDialog(null, "You can only have 100 trains!", "InfoBox: " + "Sorry!", JOptionPane.INFORMATION_MESSAGE);
 		}

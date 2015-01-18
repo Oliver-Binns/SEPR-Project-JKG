@@ -2,6 +2,8 @@ package com.SEPR.game;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -72,7 +74,7 @@ public class GameEngine extends ApplicationAdapter {
 		mainStage.addActor(quit);
 		
 		player = new Player[2];
-		player[0] = new Player(0, 9);
+		player[0] = new Player(0, 22);
 		player[1] = new Player(0, 10);
 		player[0].buyNewTrain(0, 1, 0, 0, 0);
 		player[1].buyNewTrain(0, 1, 1, 1, 0);
@@ -99,8 +101,8 @@ public class GameEngine extends ApplicationAdapter {
 		mainStage.addActor(playerInfo.goalTable);
 		
 		playerShop = new PlayerShop();
-		playerShop.create();
-		mainStage.addActor(playerShop.showShopButton);
+		//playerShop.create();
+		//mainStage.addActor(playerShop.showShopButton);
 		
 		mapGUI.updateTrainList(currentPlayer);
 		
@@ -109,7 +111,16 @@ public class GameEngine extends ApplicationAdapter {
 			public void changed(ChangeEvent event, Actor actor) {
 				mainStage.dispose();
 				map.dispose();
-				System.exit(0);
+				if(player[0].getPlayerScore() == player[1].getPlayerScore()){
+					JOptionPane.showMessageDialog(null, "Well done! You both earned " + player[0].getPlayerScore() + " points.", "Draw!", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else if(player[0].getPlayerScore() > player[1].getPlayerScore()){
+					JOptionPane.showMessageDialog(null, "Well done Player 1, you earned " + player[0].getPlayerScore() + " points!", "Player 1 Wins!", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Well done Player 2, you earned " + player[1].getPlayerScore() + " points!", "Player 2 Wins!", JOptionPane.INFORMATION_MESSAGE);
+				}
+				Gdx.app.exit();
 			}
 		});
 		
@@ -144,7 +155,6 @@ public class GameEngine extends ApplicationAdapter {
 		playerInfo.playerInfoTable.add(new Label("Player " + (currentPlayerInt + 1), GameEngine.labelStyle)).size(50, 15).row();
 		playerInfo.playerInfoTable.add(new Label("Wealth: " + currentPlayer.getPlayerWealth(), labelStyle)).size(50, 15).row();
 		playerInfo.playerInfoTable.add(new Label("Score: " + currentPlayer.getPlayerScore(), labelStyle)).size(50, 15);
-		System.out.println(currentPlayer.getPlayerScore());
 	}
 	
 	public void incrementTurn() {

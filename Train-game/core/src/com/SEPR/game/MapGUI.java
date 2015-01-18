@@ -322,7 +322,6 @@ public class MapGUI extends Game {
 					}
 					trainButton.get(b).setChecked(true);
 					selectedTrain = b;
-					System.out.println(selectedTrain);
 				}
 			});
 			
@@ -334,7 +333,6 @@ public class MapGUI extends Game {
 					}
 					trainButton.get(b).setChecked(true);
 					selectedTrain = b;
-					System.out.println(selectedTrain);
 				}
 			});
 		}
@@ -348,14 +346,7 @@ public class MapGUI extends Game {
 		}
 		if(trainMoved.get(selectedTrain) == false) {
 			for(int i = 0; i < trainList.get(selectedTrain).getSpeed(); i++) {
-				System.out.println(i);
-				System.out.println("Train speed " + trainList.get(selectedTrain).getSpeed());
-				System.out.println("trainID " + trainList.get(selectedTrain).getTrainID());
-				System.out.println("trainLoc " + trainLocation.get(selectedTrain));
-				System.out.println("selecJunc " + selectedJunction);
 				dest = gameEngine.mapGraph.MoveTrain(trainList.get(selectedTrain).getTrainID(), trainLocation.get(selectedTrain), selectedJunction);
-				System.out.println("dest " + dest);
-				System.out.println();
 				if(dest != -1) {
 					trainList.get(selectedTrain).moveTrain(dest);
 					trainButton.get(selectedTrain).setPosition(stationCoordinates[dest].x, stationCoordinates[dest].y);
