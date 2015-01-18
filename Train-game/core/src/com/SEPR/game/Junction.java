@@ -70,6 +70,7 @@ public class Junction {
 	protected int FindNext(int Destination) {
 		for(int i=0; i<this.JunctionsConnectedList.length; i++) {
 			System.out.println("junctions connected " + Arrays.toString(this.JunctionsConnectedList[i]));
+			System.out.println(this.JunctionID);
 			if(this.JunctionsConnectedList[i][0] == Destination) {
 				return this.JunctionsConnectedList[i][1];
 			}

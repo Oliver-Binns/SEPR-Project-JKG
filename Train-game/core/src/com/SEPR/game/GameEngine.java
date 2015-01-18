@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -18,6 +20,8 @@ public class GameEngine extends ApplicationAdapter {
 	SpriteBatch batch;
 	static BitmapFont font;
 	Texture map;
+	
+	Table goalTable;
 	
 	int turnCount = 0;
 	
@@ -46,6 +50,8 @@ public class GameEngine extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		mainStage = new Stage();
+		
 		batch = new SpriteBatch();
 		
 		font = new BitmapFont();
@@ -75,9 +81,15 @@ public class GameEngine extends ApplicationAdapter {
 		
 		goalEngine = new GoalEngine();
 		
-		viewport = new FitViewport(WIDTH, HEIGHT);
-		mainStage = new Stage();
-		//mainStage.setViewport(viewport);
+		goalTable = new Table();
+		String[] goalDescriptors = new String[goalEngine.getGoalDescriptors().length];
+		goalDescriptors = goalEngine.getGoalDescriptors();
+		for(int i = 0; i < goalDescriptors.length; i++){
+			goalTable.add(new Label(goalDescriptors[i], labelStyle)).row();
+		}
+		goalTable.setPosition(180, 700);
+		
+		mainStage.addActor(goalTable);
 		
 		mapGUI = new MapGUI(this);
 		mapGUI.create();
@@ -127,5 +139,9 @@ public class GameEngine extends ApplicationAdapter {
 	public void incrementTurn() {
 		mapGUI.updateTrainList(currentPlayer);
 		goalEngine.endTurn(player, ((int)Math.random()*3));
+		goalTable.clear();
+		for(int i = 0; i < goalEngine.getGoalDescriptors().length; i++){
+			goalTable.add(new Label(goalEngine.getGoalDescriptors()[i], labelStyle)).row();
+		}
 	}
 }

@@ -2,6 +2,8 @@ package com.SEPR.game;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -255,6 +257,7 @@ public class MapGUI extends Game {
 		//This will get the list of trains owned by a player to display them on screen as buttons so that they can be moved
 		trainList = new ArrayList<Train>(player.getPlayerTrains());
 		trainListTable.clear();
+		selectedTrain = -1;
 		
 		for(int c = 0; c < trainButton.size(); c++){
 			trainButton.get(c).remove();
@@ -311,6 +314,10 @@ public class MapGUI extends Game {
 	
 	protected void moveTrain() {
 		int dest = -1;
+		if(selectedTrain == -1) {
+			JOptionPane.showMessageDialog(null, "You must select a train!", "Sorry!", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
 		if(trainMoved.get(selectedTrain) == false) {
 			for(int i = 0; i < trainList.get(selectedTrain).getSpeed(); i++) {
 				System.out.println(i);
@@ -328,10 +335,16 @@ public class MapGUI extends Game {
 					gameEngine.currentPlayer.getPlayerTrains().get(selectedTrain).moveTrain(dest);
 					trainMoved.set(selectedTrain, true);
 				}
+				else {
+					JOptionPane.showMessageDialog(null, "That is not a valid move!", "Sorry!", JOptionPane.INFORMATION_MESSAGE);
+				}
 				if(dest < 37) {
 					break;
 				}
 			}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "You have already moved that train!", "Sorry!", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	

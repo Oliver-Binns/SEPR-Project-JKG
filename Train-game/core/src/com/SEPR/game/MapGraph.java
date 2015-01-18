@@ -44,7 +44,6 @@ public class MapGraph extends Game {
 		int ID;
 		int[] connectionList;
 		int[][] JCL;
-		ArrayList<int[]> jcl = new ArrayList<int[]>();
 		File map = new File(file);
 		ArrayList<Junction> jList = new ArrayList<Junction>();
 
@@ -56,6 +55,7 @@ public class MapGraph extends Game {
 			while(sc.hasNextLine()) {
 				String s;
 				String[] junctionLine;
+				ArrayList<int[]> jcl = new ArrayList<int[]>();
 
 				ID = Integer.parseInt(sc.nextLine());
 
