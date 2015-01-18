@@ -27,6 +27,8 @@ public class MapGUI extends Game {
 	SpriteDrawable stationButtonCheckedSprite;
 	SpriteDrawable junctionButtonSprite;
 	SpriteDrawable junctionButtonCheckedSprite;
+	SpriteDrawable checkpointButtonSprite;
+	SpriteDrawable checkpointButtonCheckedSprite;
 	SpriteDrawable electricTrainSprite;
 	SpriteDrawable electricTrainCheckedSprite;
 	SpriteDrawable dieselTrainSprite;
@@ -36,6 +38,7 @@ public class MapGUI extends Game {
 	
 	ImageButtonStyle stationButtonStyle;
 	ImageButtonStyle junctionButtonStyle;
+	ImageButtonStyle checkpointButtonStyle;
 	TextButtonStyle electricTrainButtonStyle;
 	TextButtonStyle dieselTrainButtonStyle;
 	TextButtonStyle flyingTrainButtonStyle;
@@ -74,6 +77,9 @@ public class MapGUI extends Game {
 		
 		junctionButtonSprite = new SpriteDrawable(new Sprite(new Texture("images/junctionButton.png")));
 		junctionButtonCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/junctionButtonChecked.png")));
+
+		checkpointButtonSprite = new SpriteDrawable(new Sprite(new Texture("images/checkpointButton.png")));
+		checkpointButtonCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/checkpointButtonChecked.png")));
 		
 		electricTrainSprite = new SpriteDrawable(new Sprite(new Texture("images/electricTrain.png")));
 		electricTrainCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/electricTrainChecked.png")));
@@ -90,6 +96,10 @@ public class MapGUI extends Game {
 		junctionButtonStyle = new ImageButtonStyle();
 		junctionButtonStyle.up = junctionButtonSprite;
 		junctionButtonStyle.checked = junctionButtonCheckedSprite;
+		
+		checkpointButtonStyle = new ImageButtonStyle();
+		checkpointButtonStyle.up = checkpointButtonSprite;
+		checkpointButtonStyle.checked = checkpointButtonCheckedSprite;
 		
 		electricTrainButtonStyle = new TextButtonStyle();
 		electricTrainButtonStyle.font = GameEngine.font;
@@ -221,8 +231,13 @@ public class MapGUI extends Game {
 			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
 		}
 		
-		for(i = 25; i < stationCount; i++) {
+		for(i = 25; i < 37; i++) {
 			stationButton[i] = new ImageButton(junctionButtonStyle);
+			GameEngine.mainStage.addActor(stationButton[i]);
+			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
+		}
+		for(i = 37; i < stationCount; i++){
+			stationButton[i] = new ImageButton(checkpointButtonStyle);
 			GameEngine.mainStage.addActor(stationButton[i]);
 			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
 		}
