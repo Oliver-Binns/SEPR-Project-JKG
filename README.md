@@ -12,4 +12,6 @@ About
 
 Features
 =
-   _Dynamic_ global goals will keep you racing against your opponent to be the first to the destination. 
+   <ul>
+   <li>_Dynamic_ global goals will keep you racing against your opponent to be the first to the destination.</li>
+   </ul>
