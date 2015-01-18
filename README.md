@@ -21,7 +21,10 @@ Features
 
 System Requirements
 =
-   The game will run on almost all desktop platforms.
+   The game will run on almost all desktop platforms. To edit and run the source code, libGDX and
+   JDK 7 (and above) will be required.
+   
+   Eclipse is recommended, but not required.
 
 Framework Features
 =
