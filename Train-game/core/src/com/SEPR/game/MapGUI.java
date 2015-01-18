@@ -307,6 +307,19 @@ public class MapGUI extends Game {
 					}
 					trainButton.get(b).setChecked(true);
 					selectedTrain = b;
+					System.out.println(selectedTrain);
+				}
+			});
+			
+			trainButton.get(i).addListener(new ClickListener() {
+				final int b = i;
+				public void clicked(InputEvent event, float x, float y) {	
+					for(int c = 0; c < trainList.size(); c++) {
+						trainButton.get(c).setChecked(false);
+					}
+					trainButton.get(b).setChecked(true);
+					selectedTrain = b;
+					System.out.println(selectedTrain);
 				}
 			});
 		}

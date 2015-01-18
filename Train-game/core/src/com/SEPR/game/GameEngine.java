@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -20,8 +19,6 @@ public class GameEngine extends ApplicationAdapter {
 	SpriteBatch batch;
 	static BitmapFont font;
 	Texture map;
-	
-	Table goalTable;
 	
 	int turnCount = 0;
 	
@@ -81,16 +78,6 @@ public class GameEngine extends ApplicationAdapter {
 		
 		goalEngine = new GoalEngine();
 		
-		goalTable = new Table();
-		String[] goalDescriptors = new String[goalEngine.getGoalDescriptors().length];
-		goalDescriptors = goalEngine.getGoalDescriptors();
-		for(int i = 0; i < goalDescriptors.length; i++){
-			goalTable.add(new Label(goalDescriptors[i], labelStyle)).row();
-		}
-		goalTable.setPosition(180, 700);
-		
-		mainStage.addActor(goalTable);
-		
 		mapGUI = new MapGUI(this);
 		mapGUI.create();
 		
@@ -99,8 +86,10 @@ public class GameEngine extends ApplicationAdapter {
 		mapGraph.AddTrain(player[0].getPlayerTrains().get(0).getTrainID(), player[0].getPlayerTrains().get(0).getCurrentJunction());
 		mapGraph.AddTrain(player[1].getPlayerTrains().get(0).getTrainID(), player[1].getPlayerTrains().get(0).getCurrentJunction());
 		
-		playerInfo = new PlayerInfo();
+		playerInfo = new PlayerInfo(this);
 		playerInfo.create();
+		
+		mainStage.addActor(playerInfo.goalTable);
 		
 		playerShop = new PlayerShop();
 		playerShop.create();
@@ -139,9 +128,13 @@ public class GameEngine extends ApplicationAdapter {
 	public void incrementTurn() {
 		mapGUI.updateTrainList(currentPlayer);
 		goalEngine.endTurn(player, ((int)Math.random()*3));
-		goalTable.clear();
+		playerInfo.goalTable.clear();
+		
+		String[] goalDescriptors = new String[goalEngine.getGoalDescriptors().length];
+		goalDescriptors = goalEngine.getGoalDescriptors();
 		for(int i = 0; i < goalEngine.getGoalDescriptors().length; i++){
-			goalTable.add(new Label(goalEngine.getGoalDescriptors()[i], labelStyle)).row();
+			playerInfo.goalTable.add(new Label(goalDescriptors[i], GameEngine.labelStyle)).size(150, 15).row();
 		}
+		playerInfo.goalTable.setPosition(85, 700);
 	}
 }
