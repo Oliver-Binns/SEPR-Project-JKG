@@ -5,7 +5,7 @@ Off The Rails
 
 About
 =
-   A turn-based, strategy game based heavily on route planning and out-smarting your opponent.
+   A turn-based, strategy game heavily relying on route planning and out-smarting your opponent.
 
    Off The Rails provides players with some novel ideas while keeping familiar strategic
    concepts central to the games mechanics.
@@ -14,8 +14,9 @@ Features
 =
    <ul>
    <li>Dynamic global goals will keep you racing against your opponent to be the first to the destination.</li>
-   <li>Players will be able to spend their wealth on upgrades for their trains and items to
+   <li>Players will be able to spend their wealth on new trains and upgrades for them and items to
    either help or hinder.</li>
+   <li>Simplistic design, promoting ease of use for the players and developers.</li>
    <li>Has completed the requirements of the assessment brief.</li>
    </ul>
 
