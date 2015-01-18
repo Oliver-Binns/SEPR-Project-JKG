@@ -1,6 +1,7 @@
 package com.SEPR.game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /*
 Junction is a connection between more than one track that can be travelled to by players
@@ -68,6 +69,7 @@ public class Junction {
 	//Returns the ID number of the next point on the line for a train to move to
 	protected int FindNext(int Destination) {
 		for(int i=0; i<this.JunctionsConnectedList.length; i++) {
+			System.out.println("junctions connected " + Arrays.toString(this.JunctionsConnectedList[i]));
 			if(this.JunctionsConnectedList[i][0] == Destination) {
 				return this.JunctionsConnectedList[i][1];
 			}

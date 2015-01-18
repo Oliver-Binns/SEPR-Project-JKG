@@ -93,15 +93,33 @@ public class MapGraph extends Game {
 	}
 
 	//Moves the Train from a specified location to a specified destination
-	protected boolean MoveTrain(int trainID, int location, int destination) {
+	protected int MoveTrain(int trainID, int location, int destination) {
+		Junction junctLocation = junctionList[location];
+		int newLoc = -1;
+		
+		if(junctLocation.IsPresent(Integer.valueOf(trainID))) {
+			newLoc = junctLocation.FindNext(destination);
+			if(newLoc == -1) {
+				return newLoc;
+			}
+			junctLocation.RemoveTrain(Integer.valueOf(trainID));
+			junctionList[newLoc].AddTrain(Integer.valueOf(trainID));
+		} else {
+			return newLoc;
+		}
+		
+		return newLoc;
+	}
+	
+	/*protected boolean MoveTrain(int trainID, int location, int destination) {
 		Junction junctLocation = junctionList[location];
 
-		if(JunctLocation.IsPresent(Integer.valueOf(trainID))) {
-			int newLoc = JunctLocation.FindNext(destination);
+		if(junctLocation.IsPresent(Integer.valueOf(trainID))) {
+			int newLoc = junctLocation.FindNext(destination);
 			if(newLoc == -1) {
 				return false;
 			}
-			JunctLocation.RemoveTrain(Integer.valueOf(trainID));
+			junctLocation.RemoveTrain(Integer.valueOf(trainID));
 			junctionList[newLoc].AddTrain(Integer.valueOf(trainID));
 		} else {
 			return false;
@@ -109,6 +127,7 @@ public class MapGraph extends Game {
 		
 		return true;
 	}
+	*/
 
 	//Adds the Train to the specified Junction
 	protected void AddTrain(int trainID, int location) {

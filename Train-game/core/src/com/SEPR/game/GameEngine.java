@@ -69,7 +69,7 @@ public class GameEngine extends ApplicationAdapter {
 		playerTrain = player[0].getPlayerTrains();
 		playerTrain.get(0).moveTrain(0);
 		playerTrain = player[1].getPlayerTrains();
-		playerTrain.get(0).moveTrain(1);
+		playerTrain.get(0).moveTrain(6);
 		
 		currentPlayer = player[0];
 		
@@ -83,6 +83,9 @@ public class GameEngine extends ApplicationAdapter {
 		mapGUI.create();
 		
 		mapGraph = new MapGraph(mapGUI.stationCount);
+		
+		mapGraph.AddTrain(player[0].getPlayerTrains().get(0).getTrainID(), player[0].getPlayerTrains().get(0).getCurrentJunction());
+		mapGraph.AddTrain(player[1].getPlayerTrains().get(0).getTrainID(), player[1].getPlayerTrains().get(0).getCurrentJunction());
 		
 		playerInfo = new PlayerInfo();
 		playerInfo.create();
@@ -110,7 +113,7 @@ public class GameEngine extends ApplicationAdapter {
 		mainStage.draw();
 	}
 	
-	public void nextTurn() {
+	public void nextPlayer() {
 		turnCount++;
 		currentPlayerInt = 1 - currentPlayerInt;
 		currentPlayer = player[currentPlayerInt];

@@ -38,8 +38,6 @@ public class MapGUI extends Game {
 	TextButtonStyle dieselTrainButtonStyle;
 	TextButtonStyle flyingTrainButtonStyle;
 	
-	MapGraph mapGraph;
-	
 	int stationCount;
 	
 	TextButton moveTrainButton;
@@ -248,7 +246,7 @@ public class MapGUI extends Game {
 		
 		nextTurn.addListener(new ClickListener() {
 			public void clicked(InputEvent event, float x, float y) {
-				gameEngine.nextTurn();
+				gameEngine.nextPlayer();
 			}
 		});
 	}
@@ -257,6 +255,15 @@ public class MapGUI extends Game {
 		//This will get the list of trains owned by a player to display them on screen as buttons so that they can be moved
 		trainList = new ArrayList<Train>(player.getPlayerTrains());
 		trainListTable.clear();
+		
+		for(int c = 0; c < trainButton.size(); c++){
+			trainButton.get(c).remove();
+		}
+		
+		trainButton.clear();
+		trainButtonList.clear();
+		trainMoved.clear();
+		trainLocation.clear();
 		
 		TextButton train = null;
 		TextButton trainText = null;
@@ -285,7 +292,7 @@ public class MapGUI extends Game {
 			trainMoved.add(false);
 		}
 		
-		trainListTable.setPosition(55, 40);
+		trainListTable.setPosition(55, 400);
 		GameEngine.mainStage.addActor(trainListTable);
 		
 		for(i = 0; i < trainList.size(); i++) {
@@ -303,19 +310,27 @@ public class MapGUI extends Game {
 	}
 	
 	protected void moveTrain() {
-		boolean flag = true;
+		int dest = -1;
 		if(trainMoved.get(selectedTrain) == false) {
-			for(int i = 0; i < trainList.get(i).getSpeed(); i++) {
-				System.out.println(trainList.get(selectedTrain).getTrainID());
-				System.out.println(trainLocation.get(selectedTrain));
-				System.out.println(selectedJunction);
-				flag = mapGraph.MoveTrain(trainList.get(selectedTrain).getTrainID(), trainLocation.get(selectedTrain), selectedJunction);
-				if(selectedJunction < 37) {
+			for(int i = 0; i < trainList.get(selectedTrain).getSpeed(); i++) {
+				System.out.println(i);
+				System.out.println("Train speed " + trainList.get(selectedTrain).getSpeed());
+				System.out.println("trainID " + trainList.get(selectedTrain).getTrainID());
+				System.out.println("trainLoc " + trainLocation.get(selectedTrain));
+				System.out.println("selecJunc " + selectedJunction);
+				dest = gameEngine.mapGraph.MoveTrain(trainList.get(selectedTrain).getTrainID(), trainLocation.get(selectedTrain), selectedJunction);
+				System.out.println("dest " + dest);
+				System.out.println();
+				if(dest != -1) {
+					trainList.get(selectedTrain).moveTrain(dest);
+					trainButton.get(selectedTrain).setPosition(stationCoordinates[dest].x, stationCoordinates[dest].y);
+					trainLocation.set(selectedTrain, dest);
+					gameEngine.currentPlayer.getPlayerTrains().get(selectedTrain).moveTrain(dest);
+					trainMoved.set(selectedTrain, true);
+				}
+				if(dest < 37) {
 					break;
 				}
-			}
-			if(flag == true) {
-				trainMoved.set(selectedTrain, false);
 			}
 		}
 	}
