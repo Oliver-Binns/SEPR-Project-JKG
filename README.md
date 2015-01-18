@@ -31,3 +31,6 @@ Framework Features
    The current source code allows for easy extensions and extra functionality to be added to the game.
    Due to the Object Oriented nature of Java, new train types, extra players, and goals can be added to the game
    with litte difficulty.
+
+_SCALABILITY_
+=
