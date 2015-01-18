@@ -9,13 +9,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class GameEngine extends ApplicationAdapter {
+	TextButton quit;
+	
 	SpriteBatch batch;
 	static BitmapFont font;
 	Texture map;
@@ -46,7 +51,7 @@ public class GameEngine extends ApplicationAdapter {
 	int currentPlayerInt = 0;
 	
 	@Override
-	public void create () {
+	public void create () {		
 		mainStage = new Stage();
 		
 		batch = new SpriteBatch();
@@ -62,6 +67,10 @@ public class GameEngine extends ApplicationAdapter {
 		
 		map = new Texture("images/SEPRMap.jpg");
 		
+		quit = new TextButton("Quit", textButtonStyle);
+		quit.setPosition(150, 10);
+		mainStage.addActor(quit);
+		
 		player = new Player[2];
 		player[0] = new Player(0, 9);
 		player[1] = new Player(0, 10);
@@ -70,9 +79,7 @@ public class GameEngine extends ApplicationAdapter {
 		
 		playerTrain = new ArrayList<Train>();
 		playerTrain = player[0].getPlayerTrains();
-		playerTrain.get(0).moveTrain(0);
 		playerTrain = player[1].getPlayerTrains();
-		playerTrain.get(0).moveTrain(6);
 		
 		currentPlayer = player[0];
 		
@@ -97,6 +104,15 @@ public class GameEngine extends ApplicationAdapter {
 		
 		mapGUI.updateTrainList(currentPlayer);
 		
+		quit.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				mainStage.dispose();
+				map.dispose();
+				System.exit(0);
+			}
+		});
+		
 		Gdx.input.setInputProcessor(mainStage);
 	}
 
@@ -119,6 +135,11 @@ public class GameEngine extends ApplicationAdapter {
 		currentPlayerInt = 1 - currentPlayerInt;
 		currentPlayer = player[currentPlayerInt];
 		mapGUI.updateTrainList(currentPlayer);
+		
+		playerInfo.playerInfoTable.clear();
+		playerInfo.playerInfoTable.add(new Label("Player " + (currentPlayerInt + 1), GameEngine.labelStyle)).size(50, 15).row();
+		playerInfo.playerInfoTable.add(new Label("Wealth: " + currentPlayer.getPlayerWealth(), labelStyle)).size(50, 15).row();
+		playerInfo.playerInfoTable.add(new Label("Score: " + currentPlayer.getPlayerScore(), labelStyle)).size(50, 15);
 		if(currentPlayerInt == 0)
 		{
 			incrementTurn();
