@@ -15,6 +15,7 @@ public class PlayerInfo extends Game {
 	
 	@Override
 	public void create() {
+		//Makes a table with the current player's wealth and score in the bottom left
 		playerInfoTable = new Table();
 		playerInfoTable.add(new Label("Player 1", GameEngine.labelStyle)).size(50, 15).row();
 		playerInfoTable.add(new Label("Wealth: " + gameEngine.currentPlayer.getPlayerWealth(), gameEngine.labelStyle)).size(50, 15).row();
@@ -22,7 +23,7 @@ public class PlayerInfo extends Game {
 		playerInfoTable.setPosition(35, 60);
 		GameEngine.mainStage.addActor(playerInfoTable);
 		
-		
+		//Gets the initial goals and displays them
 		goalTable = new Table();
 		String[] goalDescriptors = new String[gameEngine.goalEngine.getGoalDescriptors().length];
 		goalDescriptors = gameEngine.goalEngine.getGoalDescriptors();

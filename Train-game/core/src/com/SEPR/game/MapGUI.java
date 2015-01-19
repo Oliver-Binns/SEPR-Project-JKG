@@ -23,6 +23,7 @@ public class MapGUI extends Game {
 	int selectedTrain;
 	int selectedJunction;
 	
+	//All the sprites used by the map GUI. Must be drawable to be used as button images
 	SpriteDrawable stationButtonSprite;
 	SpriteDrawable stationButtonCheckedSprite;
 	SpriteDrawable junctionButtonSprite;
@@ -36,6 +37,7 @@ public class MapGUI extends Game {
 	SpriteDrawable flyingTrainSprite;
 	SpriteDrawable flyingTrainCheckedSprite;
 	
+	//Button Styles used in the map GUI
 	ImageButtonStyle stationButtonStyle;
 	ImageButtonStyle junctionButtonStyle;
 	ImageButtonStyle checkpointButtonStyle;
@@ -72,6 +74,7 @@ public class MapGUI extends Game {
 		nextTurn.setPosition(70, 10);
 		GameEngine.mainStage.addActor(nextTurn);
 		
+		//Setting all the sprites with the images in the images packages
 		stationButtonSprite = new SpriteDrawable(new Sprite(new Texture("images/stationButton.png")));
 		stationButtonCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/stationButtonChecked.png")));
 		
@@ -88,6 +91,7 @@ public class MapGUI extends Game {
 		flyingTrainSprite = new SpriteDrawable(new Sprite(new Texture("images/flyingTrain.png")));
 		flyingTrainCheckedSprite = new SpriteDrawable(new Sprite(new Texture("images/flyingTrainChecked.png")));
 		
+		//Setting up the button styles with the sprites
 		stationButtonStyle = new ImageButtonStyle();
 		stationButtonStyle.up = stationButtonSprite;
 		stationButtonStyle.down = stationButtonSprite;
@@ -124,6 +128,7 @@ public class MapGUI extends Game {
 		
 		GameEngine.mainStage.addActor(trainListTable);
 		
+		//The array giving the pixel coordinates of all the stations on the map. Used to position the station and junction buttons and the trains.
 		stationCoordinates = new Coordinates[stationCount];
 		stationCoordinates[0] = new Coordinates(241, 106);
 		stationCoordinates[1] = new Coordinates(276, 172);
@@ -224,6 +229,7 @@ public class MapGUI extends Game {
 		stationCoordinates[90] = new Coordinates(1400 * ((float)GameEngine.WIDTH/1680), (1050 - 301) * ((float)GameEngine.HEIGHT/1050));
 		stationCoordinates[94] = new Coordinates(1453 * ((float)GameEngine.WIDTH/1680), (1050 - 492) * ((float)GameEngine.HEIGHT/1050));
 		
+		//Setting the city buttons on the map
 		stationButton = new ImageButton[stationCount];
 		for(i = 0; i < 25; i++) 	{
 			stationButton[i] = new ImageButton(stationButtonStyle);
@@ -231,17 +237,21 @@ public class MapGUI extends Game {
 			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
 		}
 		
+		//setting the junction buttons on the map
 		for(i = 25; i < 37; i++) {
 			stationButton[i] = new ImageButton(junctionButtonStyle);
 			GameEngine.mainStage.addActor(stationButton[i]);
 			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
 		}
+		
+		//Setting the checkpoint markers on the map
 		for(i = 37; i < stationCount; i++){
 			stationButton[i] = new ImageButton(checkpointButtonStyle);
 			GameEngine.mainStage.addActor(stationButton[i]);
 			stationButton[i].setPosition(stationCoordinates[i].x, stationCoordinates[i].y);
 		}
 		
+		//Setting the stations to have only one clicked at a time and set selectedStation to store which station is checked
 		for(i = 0; i < stationCount; i++) {
 			stationButton[i].addListener(new ClickListener() {
 				final int b = i;
@@ -255,12 +265,14 @@ public class MapGUI extends Game {
 			});
 		}
 		
+		//Click listener for the "Move" button. Click listener runs clicked when the button is clicked
 		moveTrainButton.addListener(new ClickListener() {
 			public void clicked(InputEvent event, float x, float y) {
 				moveTrain();
 			}
 		});
 		
+		//Click listener for the "End Turn" button
 		nextTurn.addListener(new ClickListener() {
 			public void clicked(InputEvent event, float x, float y) {
 				gameEngine.nextPlayer();
@@ -268,12 +280,13 @@ public class MapGUI extends Game {
 		});
 	}
 	
+	//Gets the trains owned by the current player and displays them on the screen as buttons
 	public void updateTrainList(Player player) {
-		//This will get the list of trains owned by a player to display them on screen as buttons so that they can be moved
 		trainList = new ArrayList<Train>(player.getPlayerTrains());
 		trainListTable.clear();
 		selectedTrain = -1;
 		
+		//removes the previous player's trains
 		for(int c = 0; c < trainButton.size(); c++){
 			trainButton.get(c).remove();
 		}
@@ -286,7 +299,9 @@ public class MapGUI extends Game {
 		TextButton train = null;
 		TextButton trainText = null;
 		
+		
 		for(int i = 0; i < trainList.size(); i++) {
+			//Sets the correct button for the type and tier of each train
 			switch(trainList.get(i).getEngineType()) {
 			case 1:
 				train = new TextButton(String.valueOf(trainList.get(i).getTier()), electricTrainButtonStyle);
@@ -313,6 +328,7 @@ public class MapGUI extends Game {
 		trainListTable.setPosition(55, 400);
 		GameEngine.mainStage.addActor(trainListTable);
 		
+		//Makes the click listeners for the list of trains and the train buttons on the map so that only one can be checked and remembers the checked one
 		for(i = 0; i < trainList.size(); i++) {
 			trainButtonList.get(i).addListener(new ClickListener() {
 				final int b = i;
@@ -338,16 +354,17 @@ public class MapGUI extends Game {
 		}
 	}
 	
+	//Called each time "Move" is clicked. Checks a train hasn't already moved and moves it to the location given by mapGraph
 	protected void moveTrain() {
 		int dest = -1;
-		if(selectedTrain == -1) {
+		if(selectedTrain == -1) { //No train currently selected
 			JOptionPane.showMessageDialog(null, "You must select a train!", "Sorry!", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		if(trainMoved.get(selectedTrain) == false) {
 			for(int i = 0; i < trainList.get(selectedTrain).getSpeed(); i++) {
 				dest = gameEngine.mapGraph.MoveTrain(trainList.get(selectedTrain).getTrainID(), trainLocation.get(selectedTrain), selectedJunction);
-				if(dest != -1) {
+				if(dest != -1) {//Not a valid move ie moscow to paris
 					trainList.get(selectedTrain).moveTrain(dest);
 					trainButton.get(selectedTrain).setPosition(stationCoordinates[dest].x, stationCoordinates[dest].y);
 					trainLocation.set(selectedTrain, dest);
@@ -357,7 +374,7 @@ public class MapGUI extends Game {
 				else {
 					JOptionPane.showMessageDialog(null, "That is not a valid move!", "Sorry!", JOptionPane.INFORMATION_MESSAGE);
 				}
-				if(dest < 37) {
+				if(dest < 37) { //You have arrived at a station or junction and so must make a decision
 					break;
 				}
 			}

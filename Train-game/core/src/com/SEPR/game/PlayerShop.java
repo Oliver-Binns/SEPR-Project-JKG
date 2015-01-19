@@ -57,6 +57,7 @@ public class PlayerShop extends Game {
 		showShopButton = new TextButton("Shop", GameEngine.textButtonStyle);
 		showShopButton.setPosition(10, GameEngine.HEIGHT - 20);
 		
+		//creates the buttons used to buy trains
 		electricT1 = new TextButton("Tier 1", GameEngine.textButtonStyle);
 		electricT2 = new TextButton("Tier 2", GameEngine.textButtonStyle);
 		electricT3 = new TextButton("Tier 3", GameEngine.textButtonStyle);
@@ -76,6 +77,7 @@ public class PlayerShop extends Game {
 		
 		shopTable.add(engines).row();
 		
+		//Adds all the buttons and labels to the shop table
 		shopTable.add(electric).size(cellWidth, cellHeight);
 		shopTable.add(electricT1).size(cellWidth, cellHeight);
 		shopTable.add(electricT2).size(cellWidth, cellHeight);
@@ -100,6 +102,7 @@ public class PlayerShop extends Game {
 		//shopStage.setViewport(GameEngine.viewport);
 		shopStage.addActor(shopTable);
 		
+		//The listener for the "Shop" button. Used to show and hide the shop
 		showShopButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -114,6 +117,7 @@ public class PlayerShop extends Game {
 			}
 		});
 		
+		//The listeners for all the buy train buttons. Currently non functional, need to call the buyTrain method in player class
 		electricT1.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -171,6 +175,7 @@ public class PlayerShop extends Game {
 		});
 	}
 	
+	//Renders the shop if the shop is shown. Called by render in GameEngine
 	@Override
 	public void render() {		
 		if (showShop) {

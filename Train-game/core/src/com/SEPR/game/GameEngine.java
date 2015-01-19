@@ -11,13 +11,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class GameEngine extends ApplicationAdapter {
@@ -39,16 +39,15 @@ public class GameEngine extends ApplicationAdapter {
 	public static LabelStyle labelStyle;
 	public static TextButtonStyle textButtonStyle;
 	
-	PlayerShop playerShop;
+	//PlayerShop playerShop;
 	PlayerInfo playerInfo;
 	MapGUI mapGUI;
+	MapGraph mapGraph;
+	GoalEngine goalEngine;
 	
 	Player[] player;
 	Player currentPlayer;
 	ArrayList<Train> playerTrain;
-	
-	MapGraph mapGraph;
-	GoalEngine goalEngine;
 	
 	int currentPlayerInt = 0;
 	
@@ -58,6 +57,7 @@ public class GameEngine extends ApplicationAdapter {
 		
 		batch = new SpriteBatch();
 		
+		//Sets up the standard styles used throughout the game
 		font = new BitmapFont();
 		font.setColor(Color.RED);
 		
@@ -73,6 +73,7 @@ public class GameEngine extends ApplicationAdapter {
 		quit.setPosition(150, 10);
 		mainStage.addActor(quit);
 		
+		//Instansiates the players and gives them each a starting train
 		player = new Player[2];
 		player[0] = new Player(0, 22);
 		player[1] = new Player(0, 10);
@@ -100,15 +101,17 @@ public class GameEngine extends ApplicationAdapter {
 		
 		mainStage.addActor(playerInfo.goalTable);
 		
-		playerShop = new PlayerShop();
+		//Shop will allow players to spend wealth to get resources, not currently finished so not implemented
+		//playerShop = new PlayerShop();
 		//playerShop.create();
 		//mainStage.addActor(playerShop.showShopButton);
 		
 		mapGUI.updateTrainList(currentPlayer);
 		
-		quit.addListener(new ChangeListener() {
+		//The click listener fot the quit button. Displays an option pane with the winner and then quits the game
+		quit.addListener(new ClickListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor) {
+			public void clicked(InputEvent event, float x, float y) {
 				mainStage.dispose();
 				map.dispose();
 				if(player[0].getPlayerScore() == player[1].getPlayerScore()){
@@ -127,6 +130,7 @@ public class GameEngine extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(mainStage);
 	}
 
+	//Render function called by libgdx every frame. Other classes rendering is handled in their render functions and called here.
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -137,10 +141,11 @@ public class GameEngine extends ApplicationAdapter {
 		batch.end();
 		
 		playerInfo.render();
-		playerShop.render();
+		//playerShop.render();
 		mainStage.draw();
 	}
 	
+	//Called everytime "End turn" is clicked. Switches player and updates the player's info on the screen
 	public void nextPlayer() {
 		turnCount++;
 		currentPlayerInt = 1 - currentPlayerInt;
@@ -157,8 +162,8 @@ public class GameEngine extends ApplicationAdapter {
 		playerInfo.playerInfoTable.add(new Label("Score: " + currentPlayer.getPlayerScore(), labelStyle)).size(50, 15);
 	}
 	
+	//Called every other time "End turn" is clicked. Tells goal engine the turn set has ended and updates the goals on the screen
 	public void incrementTurn() {
-		mapGUI.updateTrainList(currentPlayer);
 		goalEngine.endTurn(player);
 		playerInfo.goalTable.clear();
 		
