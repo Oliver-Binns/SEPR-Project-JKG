@@ -159,7 +159,7 @@ public class GameEngine extends ApplicationAdapter {
 	
 	public void incrementTurn() {
 		mapGUI.updateTrainList(currentPlayer);
-		goalEngine.endTurn(player, ((int)Math.random()*3));
+		goalEngine.endTurn(player);
 		playerInfo.goalTable.clear();
 		
 		String[] goalDescriptors = new String[goalEngine.getGoalDescriptors().length];

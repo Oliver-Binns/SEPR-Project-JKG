@@ -30,9 +30,10 @@ public class GoalEngine {
 		return goalDescriptor;
 	}
 	
-	public void endTurn(Player[] players, int goalToDestroy) {
+	public void endTurn(Player[] players) {
 		int[] playerPoints = new int[players.length];
 		int[] playerMoney = new int[players.length];
+		boolean flag = false;
 		for(int i = 0; i < players.length; i++) {
 			playerMoney[i] = 0;
 			playerPoints[i]= 0;
@@ -61,8 +62,13 @@ public class GoalEngine {
 			if(numberPlayersCompleted > 0) { //GOAL COMPLETE- Destroy Goal
 				destroyGoal(i);
 			}
+			else{
+				flag = true;
+			}
 		}
-		
+		if(flag){
+			destroyGoal(random(0, 3));
+		}
 	}
 	
 	public void destroyGoal(int goalID) {
